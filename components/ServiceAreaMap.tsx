@@ -1,8 +1,71 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MapPin, Navigation, Radio, Globe, Target, Activity, ShieldCheck, Zap } from 'lucide-react';
+import L from 'leaflet';
 
 const ServiceAreaMap: React.FC = () => {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
+
+  useEffect(() => {
+    if (mapContainerRef.current && !mapInstanceRef.current) {
+      // Initialize map centered on Toronto
+      const torontoCoords: [number, number] = [43.6532, -79.3832];
+      
+      const map = L.map(mapContainerRef.current, {
+        zoomControl: false,
+        attributionControl: false,
+        scrollWheelZoom: false,
+        dragging: true,
+      }).setView(torontoCoords, 10);
+
+      // Add high-tech dark matter tiles
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Define locations for markers
+      const locations = [
+        { coords: [43.6532, -79.3832] as [number, number], label: 'CENTRAL HUB' },
+        { coords: [43.7886, -79.4659] as [number, number], label: 'NORTH SEC' },
+        { coords: [43.5890, -79.6441] as [number, number], label: 'WEST SEC' },
+        { coords: [43.7731, -79.2577] as [number, number], label: 'EAST SEC' }
+      ];
+
+      // Add custom pulsing markers
+      locations.forEach((loc) => {
+        const customIcon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `
+            <div class="relative flex items-center justify-center">
+              <div class="absolute w-8 h-8 bg-orange-500 rounded-full animate-ping opacity-40"></div>
+              <div class="relative w-4 h-4 bg-orange-600 rounded-full border-2 border-white shadow-lg shadow-orange-600/50"></div>
+            </div>
+          `,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+        });
+
+        L.marker(loc.coords, { icon: customIcon })
+          .addTo(map)
+          .bindTooltip(loc.label, {
+            permanent: false,
+            direction: 'top',
+            className: 'atomic-tooltip'
+          });
+      });
+
+      mapInstanceRef.current = map;
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <div className="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden relative">
       {/* Background HUD Grid */}
@@ -62,126 +125,76 @@ const ServiceAreaMap: React.FC = () => {
             </div>
           </div>
 
-          {/* REDESIGNED: High-Fidelity Tactical Mission Map */}
+          {/* REAL-WORLD INTERACTIVE MAP SECTION */}
           <div className="lg:col-span-8 relative">
-            <div className="relative bg-[#020617] rounded-[3.5rem] border border-white/15 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)] overflow-hidden min-h-[680px] flex items-center justify-center group/map">
+            <div className="relative bg-[#020617] rounded-[3.5rem] border border-white/15 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)] overflow-hidden min-h-[680px] group/map">
               
-              {/* Vibrant Gradient Backgrounds */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-[#020617] to-[#0a1a3a]"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
-              <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-orange-600/5 blur-[100px] rounded-full pointer-events-none translate-y-1/2 translate-x-1/2"></div>
+              {/* Map Container */}
+              <div ref={mapContainerRef} className="absolute inset-0 z-0" />
 
-              {/* Detailed Toronto Map Geometry (SVG) */}
-              <div className="absolute inset-0 flex items-center justify-center p-12 opacity-40">
-                <svg viewBox="0 0 800 600" className="w-full h-full text-white/40" stroke="currentColor" fill="none" strokeWidth="1.5">
-                   {/* Realistic Toronto Shoreline Path */}
-                   <path d="M50,480 Q150,460 250,485 T450,490 T650,470 T780,440" stroke="white" strokeWidth="2" strokeOpacity="0.5" />
-                   
-                   {/* Major Highway Infrastructure (Simulated) */}
-                   <path d="M50,420 L750,380" stroke="orange" strokeDasharray="4 8" strokeOpacity="0.3" /> {/* QEW/401 */}
-                   <path d="M400,100 L400,490" stroke="white" strokeDasharray="2 10" strokeOpacity="0.2" /> {/* DVP/404 */}
-                   <path d="M250,150 L250,485" stroke="white" strokeDasharray="2 10" strokeOpacity="0.2" /> {/* 427 */}
+              {/* HUD OVERLAYS (Layered over Map) */}
+              <div className="absolute inset-0 pointer-events-none z-10">
+                <div className="absolute inset-0 border-[24px] border-slate-950/40"></div>
+                <div className="absolute inset-0 rounded-[3.2rem] shadow-[inset_0_0_150px_rgba(0,0,0,0.7)]"></div>
+                
+                {/* Target Corners */}
+                <div className="absolute top-12 left-12 w-12 h-12 border-t-2 border-l-2 border-orange-500 opacity-60"></div>
+                <div className="absolute top-12 right-12 w-12 h-12 border-t-2 border-r-2 border-white/20"></div>
+                <div className="absolute bottom-12 left-12 w-12 h-12 border-b-2 border-l-2 border-white/20"></div>
+                <div className="absolute bottom-12 right-12 w-12 h-12 border-b-2 border-r-2 border-orange-500 opacity-60"></div>
 
-                   {/* Concentric Grid Overlay */}
-                   <circle cx="400" cy="350" r="100" opacity="0.05" strokeWidth="1" />
-                   <circle cx="400" cy="350" r="200" opacity="0.03" strokeWidth="1" />
-                   <circle cx="400" cy="350" r="300" opacity="0.01" strokeWidth="1" />
-                </svg>
-              </div>
-
-              {/* HIGH VISIBILITY HUD OVERLAYS */}
-              <div className="absolute top-12 left-12 flex flex-col gap-3">
-                <div className="px-5 py-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 flex items-center gap-4 shadow-2xl">
-                   <div className="relative">
-                     <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-40"></div>
-                     <div className="relative w-3 h-3 bg-green-500 rounded-full shadow-[0_0_15px_#22c55e]"></div>
-                   </div>
-                   <span className="text-[11px] font-black text-white uppercase tracking-[0.3em]">Uplink: Optimal</span>
-                </div>
-                <div className="px-5 py-3 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 flex items-center gap-4">
-                   <Target size={16} className="text-orange-500" />
-                   <span className="text-[11px] font-black text-white/90 uppercase tracking-[0.2em]">Sector GTA_V4</span>
-                </div>
-              </div>
-
-              <div className="absolute bottom-12 right-12 text-right space-y-2">
-                <div className="flex items-center gap-2 justify-end text-orange-500 mb-2">
-                  <Zap size={14} className="animate-pulse" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Live Fleet Telemetry</span>
-                </div>
-                <p className="text-[11px] font-black text-white uppercase tracking-[0.5em] opacity-40">Operational Grid</p>
-                <p className="text-white font-mono text-base font-bold">43.6532° N // 79.3832° W</p>
-              </div>
-
-              {/* VIBRANT CENTRAL INTERACTION */}
-              <div className="relative group/radar">
-                 {/* Central Glow */}
-                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-600/10 rounded-full animate-[radarPulse_6s_ease-in-out_infinite]"></div>
-                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-orange-600/5 border border-orange-500/20 rounded-full"></div>
-                 
-                 {/* Active Site Pings - MORE COLORFUL & VISIBLE */}
-                 {[
-                   { t: '15%', l: '40%', label: 'VAUGHAN_DEPLOY', color: 'bg-cyan-500' },
-                   { t: '50%', l: '50%', label: 'CENTRAL_HUB', primary: true, color: 'bg-orange-600' },
-                   { t: '65%', l: '20%', label: 'ETOBICOKE_WEST', color: 'bg-emerald-500' },
-                   { t: '35%', l: '75%', label: 'RICHMOND_NORTH', color: 'bg-cyan-500' },
-                   { t: '75%', l: '85%', label: 'SCARBOROUGH_EAST', color: 'bg-blue-500' }
-                 ].map((site, i) => (
-                   <div key={i} className="absolute transform -translate-x-1/2 -translate-y-1/2" style={{ top: site.t, left: site.l }}>
-                      <div className="relative flex flex-col items-center">
-                         {/* Glowing Ring */}
-                         <div className={`absolute w-14 h-14 rounded-full animate-ping opacity-20 ${site.primary ? 'bg-orange-500' : site.color}`}></div>
-                         
-                         {/* Site Marker */}
-                         <div className={`relative w-5 h-5 rounded-full border-2 border-white shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover/map:scale-125 ${site.primary ? 'bg-orange-600' : site.color}`}>
-                            <div className="absolute inset-0 bg-white/30 rounded-full animate-pulse"></div>
-                         </div>
-
-                         {/* High-Contrast Label */}
-                         <div className="mt-4 whitespace-nowrap bg-white px-4 py-2 rounded-xl shadow-2xl border border-slate-200 translate-y-2 opacity-0 group-hover/map:opacity-100 group-hover/map:translate-y-0 transition-all duration-500">
-                            <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest">{site.label}</span>
-                         </div>
-                      </div>
-                   </div>
-                 ))}
-              </div>
-
-              {/* TECH HUD DETAILS (Bright White) */}
-              <div className="absolute bottom-12 left-12">
-                 <div className="flex items-center gap-6">
-                    <div className="space-y-1">
-                       <p className="text-[9px] font-black text-white/50 uppercase tracking-widest">Active Units</p>
-                       <p className="text-white font-black text-2xl tracking-tighter">12 <span className="text-orange-500">/ 14</span></p>
+                {/* Status Readouts */}
+                <div className="absolute top-16 left-16 flex flex-col gap-3">
+                  <div className="px-5 py-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 flex items-center gap-4 shadow-2xl">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-40"></div>
+                      <div className="relative w-3 h-3 bg-green-500 rounded-full shadow-[0_0_15px_#22c55e]"></div>
                     </div>
-                    <div className="w-px h-10 bg-white/10"></div>
-                    <div className="space-y-1">
-                       <p className="text-[9px] font-black text-white/50 uppercase tracking-widest">Avg Response</p>
-                       <p className="text-white font-black text-2xl tracking-tighter">42.8m</p>
-                    </div>
+                    <span className="text-[11px] font-black text-white uppercase tracking-[0.3em]">Uplink: Optimal</span>
+                  </div>
+                  <div className="px-5 py-3 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 flex items-center gap-4">
+                    <Target size={16} className="text-orange-500" />
+                    <span className="text-[11px] font-black text-white/90 uppercase tracking-[0.2em]">Sector GTA_LIVE</span>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-16 right-16 text-right space-y-2">
+                  <div className="flex items-center gap-2 justify-end text-orange-500 mb-2">
+                    <Zap size={14} className="animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Active Dispatch Link</span>
+                  </div>
+                  <p className="text-[11px] font-black text-white uppercase tracking-[0.5em] opacity-40">Operational Grid</p>
+                  <p className="text-white font-mono text-base font-bold">43.6532° N // 79.3832° W</p>
+                </div>
+              </div>
+
+              {/* Interaction Callout (Center) */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-20 opacity-0 group-hover/map:opacity-100 transition-opacity duration-500">
+                 <div className="bg-white/10 backdrop-blur-lg border border-white/20 px-8 py-4 rounded-3xl text-white font-black text-xs uppercase tracking-[0.3em] flex items-center gap-4">
+                    <Navigation size={18} className="text-orange-500" />
+                    Live Map Interactive
                  </div>
               </div>
-
-              {/* Decorative HUD Elements */}
-              <div className="absolute inset-0 pointer-events-none border-[24px] border-slate-950/40"></div>
-              <div className="absolute inset-0 pointer-events-none rounded-[3.2rem] shadow-[inset_0_0_150px_rgba(0,0,0,0.9)]"></div>
-              
-              {/* Vibrant Scanline */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-orange-500/40 to-transparent animate-[mapScanVibrant_10s_linear_infinite] blur-[1px]"></div>
             </div>
           </div>
         </div>
       </div>
       
       <style>{`
-        @keyframes mapScanVibrant {
-          0% { top: -10%; opacity: 0; }
-          10% { opacity: 0.8; }
-          90% { opacity: 0.8; }
-          100% { top: 110%; opacity: 0; }
+        .atomic-tooltip {
+          background: #0f172a !important;
+          border: 1px solid #FF6B00 !important;
+          color: white !important;
+          font-weight: 900 !important;
+          font-size: 10px !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.1em !important;
+          padding: 6px 12px !important;
+          border-radius: 8px !important;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
         }
-        @keyframes radarPulse {
-          0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
-          50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+        .atomic-tooltip:before {
+          border-top-color: #FF6B00 !important;
         }
       `}</style>
     </div>
