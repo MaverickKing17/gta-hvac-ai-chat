@@ -65,11 +65,11 @@ const RebateCalculator: React.FC = () => {
                   <h4 className="font-black text-slate-900 text-xl tracking-tighter group-hover:text-orange-600 transition-colors">
                     {item.title}
                   </h4>
-                  <div className="px-2 py-0.5 bg-slate-100 rounded text-[8px] font-black text-slate-400 tracking-widest uppercase">
+                  <div className="px-2 py-0.5 bg-slate-200 rounded text-[8px] font-black text-slate-600 tracking-widest uppercase border border-slate-300">
                     {item.tag}
                   </div>
                 </div>
-                <p className="text-slate-900 text-base font-bold leading-snug max-w-sm opacity-80">
+                <p className="text-slate-900 text-base font-bold leading-snug max-w-sm opacity-90">
                   {item.desc}
                 </p>
               </div>
@@ -93,15 +93,15 @@ const RebateCalculator: React.FC = () => {
             <div className="mb-14">
               <div className="flex justify-between items-end mb-10">
                 <div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2 flex items-center gap-2">
+                  <div className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-600 mb-2 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
                     Area Calibration
                   </div>
                   <h3 className="text-slate-900 text-5xl font-black tracking-tighter">
-                    {homeSize.toLocaleString()} <span className="text-slate-400 text-lg font-bold">SQ.FT.</span>
+                    {homeSize.toLocaleString()} <span className="text-slate-500 text-lg font-black">SQ.FT.</span>
                   </h3>
                 </div>
-                <div className="hidden sm:block text-[9px] font-black text-slate-300 uppercase tracking-widest border border-slate-200 px-3 py-1.5 rounded-lg">
+                <div className="hidden sm:block text-[9px] font-black text-slate-600 uppercase tracking-widest border border-slate-300 px-3 py-1.5 rounded-lg bg-white shadow-sm">
                   REF_ID: TOR_Z4_HVAC
                 </div>
               </div>
@@ -114,11 +114,11 @@ const RebateCalculator: React.FC = () => {
                   step="50" 
                   value={homeSize}
                   onChange={(e) => setHomeSize(parseInt(e.target.value))}
-                  className="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-slate-900 hover:accent-orange-600 transition-all"
+                  className="w-full h-1.5 bg-slate-300 rounded-full appearance-none cursor-pointer accent-slate-900 hover:accent-orange-600 transition-all"
                 />
-                <div className="flex justify-between mt-6 text-[9px] font-black text-slate-400 tracking-[0.2em] uppercase">
+                <div className="flex justify-between mt-6 text-[9px] font-black text-slate-600 tracking-[0.2em] uppercase">
                   <span>Min Range (500)</span>
-                  <div className="h-4 w-px bg-slate-200"></div>
+                  <div className="h-4 w-px bg-slate-300"></div>
                   <span>Max Range (5000)</span>
                 </div>
               </div>
@@ -126,7 +126,7 @@ const RebateCalculator: React.FC = () => {
 
             {/* Segmented Control: Energy Source */}
             <div className="mb-14">
-              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-6">Inbound Energy Source</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-600 mb-6">Inbound Energy Source</p>
               <div className="flex bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
                 {[
                   { label: 'Gas', icon: <Flame size={16} /> },
@@ -139,7 +139,7 @@ const RebateCalculator: React.FC = () => {
                     className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all duration-300 ${
                       fuelType === type.label.toLowerCase()
                         ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20'
-                        : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     {type.icon}
@@ -155,7 +155,7 @@ const RebateCalculator: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-orange-600/20 to-transparent"></div>
               
               <div className="relative z-10">
-                <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] mb-6">Total Estimated Recovery</p>
+                <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.4em] mb-6">Total Estimated Recovery</p>
                 <div className="flex items-start justify-center gap-1 mb-8">
                   <span className="text-3xl font-black text-orange-500 mt-3">$</span>
                   <span className="text-8xl font-black text-white tracking-tighter tabular-nums">
@@ -179,8 +179,8 @@ const RebateCalculator: React.FC = () => {
                 Execute Rebate Filing
                 <CheckCircle2 size={18} className="group-hover:rotate-[360deg] transition-transform duration-700" />
               </button>
-              <p className="text-[9px] text-slate-400 font-bold text-center uppercase tracking-widest flex items-center justify-center gap-2">
-                <Info size={12} />
+              <p className="text-[9px] text-slate-600 font-black text-center uppercase tracking-widest flex items-center justify-center gap-2">
+                <Info size={12} className="text-orange-600" />
                 Calculations based on current Ontario HERP+ guidelines
               </p>
             </div>
