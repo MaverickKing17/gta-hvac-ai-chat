@@ -4,12 +4,13 @@ import {
   Mail, Phone, Instagram, Facebook, Send, ShieldCheck, 
   MapPin, ExternalLink, Globe, Lock, LifeBuoy, FileText, 
   X, ChevronRight, Scale, BookOpen, Wrench, Award, AlertCircle,
-  Database, Activity, MessageSquare
+  Database, Activity, MessageSquare, CheckCircle, RefreshCcw, Loader2
 } from 'lucide-react';
 import { COMPANY_NAME, PHONE, EMAIL } from '../constants';
 
 const Footer: React.FC = () => {
   const [modalContent, setModalContent] = useState<{title: string, content: React.ReactNode} | null>(null);
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const openModal = (title: string, content: React.ReactNode) => {
     setModalContent({ title, content });
@@ -19,6 +20,31 @@ const Footer: React.FC = () => {
   const closeModal = () => {
     setModalContent(null);
     document.body.style.overflow = 'unset';
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+    
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/xojjbbza", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -53,70 +79,122 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Formspree Integrated Contact Form */}
-          <div className="relative group">
+          {/* REDESIGNED: AJAX Integrated Contact Form */}
+          <div className="relative group min-h-[500px]">
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-600/20 to-slate-800 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-            <form 
-              action="https://formspree.io/f/xojjbbza" 
-              method="POST"
-              className="relative bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 space-y-6 backdrop-blur-xl"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-10 h-10 bg-orange-600/20 rounded-xl flex items-center justify-center text-orange-500">
-                  <Database size={18} />
+            
+            <div className="relative h-full bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 backdrop-blur-xl flex flex-col justify-center overflow-hidden">
+              
+              {formStatus === 'success' ? (
+                /* SUCCESS STATE UI */
+                <div className="text-center space-y-8 animate-in fade-in zoom-in duration-500">
+                  <div className="relative w-24 h-24 mx-auto mb-4">
+                    <div className="absolute inset-0 bg-green-500/20 rounded-full animate-ping"></div>
+                    <div className="relative w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+                      <CheckCircle size={48} />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                       <span className="text-[10px] font-black text-green-500 uppercase tracking-[0.4em]">Transmission Received</span>
+                    </div>
+                    <h3 className="text-3xl font-black text-white tracking-tighter mb-4">Data Synchronized.</h3>
+                    <p className="text-slate-400 font-medium leading-relaxed max-w-xs mx-auto">
+                      Your technical consult request has been successfully uploaded to our field dispatch queue. A Master Technician will review your specs shortly.
+                    </p>
+                  </div>
+
+                  <button 
+                    onClick={() => setFormStatus('idle')}
+                    className="mx-auto flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-[10px] font-black text-white uppercase tracking-[0.3em] transition-all active:scale-95"
+                  >
+                    <RefreshCcw size={14} />
+                    New Transmission
+                  </button>
                 </div>
-                <h3 className="text-white font-black uppercase tracking-widest text-xs">Technical Consult Request</h3>
-              </div>
+              ) : (
+                /* INPUT STATE UI */
+                <form 
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-orange-600/20 rounded-xl flex items-center justify-center text-orange-500">
+                        <Database size={18} />
+                      </div>
+                      <h3 className="text-white font-black uppercase tracking-widest text-xs">Technical Consult Request</h3>
+                    </div>
+                    {formStatus === 'error' && (
+                      <div className="flex items-center gap-2 text-red-500 text-[9px] font-black uppercase tracking-widest animate-pulse">
+                        <AlertCircle size={14} /> Uplink Error
+                      </div>
+                    )}
+                  </div>
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  name="name"
-                  placeholder="Full Name" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
-                />
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="Email Address" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
-                />
-              </div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <input 
+                      type="text" 
+                      name="name"
+                      placeholder="Full Name" 
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
+                    />
+                    <input 
+                      type="email" 
+                      name="email"
+                      placeholder="Email Address" 
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
+                    />
+                  </div>
 
-              <select 
-                name="system_type"
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm appearance-none"
-              >
-                <option value="" className="bg-slate-900">Select System Interest</option>
-                <option value="heat_pump" className="bg-slate-900">Cold-Climate Heat Pump</option>
-                <option value="boiler" className="bg-slate-900">High-Efficiency Boiler</option>
-                <option value="snow_melt" className="bg-slate-900">Snow Melting System</option>
-                <option value="service" className="bg-slate-900">Emergency Repair / Service</option>
-              </select>
+                  <select 
+                    name="system_type"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm appearance-none"
+                  >
+                    <option value="" className="bg-slate-900">Select System Interest</option>
+                    <option value="heat_pump" className="bg-slate-900">Cold-Climate Heat Pump</option>
+                    <option value="boiler" className="bg-slate-900">High-Efficiency Boiler</option>
+                    <option value="snow_melt" className="bg-slate-900">Snow Melting System</option>
+                    <option value="service" className="bg-slate-900">Emergency Repair / Service</option>
+                  </select>
 
-              <textarea 
-                name="message"
-                placeholder="Mission Brief / Project Details" 
-                rows={4}
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm resize-none"
-              ></textarea>
+                  <textarea 
+                    name="message"
+                    placeholder="Mission Brief / Project Details" 
+                    rows={4}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm resize-none"
+                  ></textarea>
 
-              <button 
-                type="submit"
-                className="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-xl active:scale-[0.98]"
-              >
-                Initialize Request
-                <Send size={16} />
-              </button>
-            </form>
+                  <button 
+                    type="submit"
+                    disabled={formStatus === 'submitting'}
+                    className={`w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-xl active:scale-[0.98] ${formStatus === 'submitting' ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {formStatus === 'submitting' ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        Processing Uplink...
+                      </>
+                    ) : (
+                      <>
+                        Initialize Request
+                        <Send size={16} />
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Middle Section: Big Navigation Grid */}
+        {/* Middle Section: Navigation Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 py-24">
           <div className="space-y-6">
             <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
@@ -138,7 +216,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-xs font-bold text-slate-500">
               <li><button onClick={() => openModal('Rebate Guide 2026', <RebateGuide />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><FileText size={12}/> Rebate Guide</button></li>
               <li><button onClick={() => openModal('Maintenance Checklist', <MaintenanceChecklist />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><BookOpen size={12}/> Field Checklist</button></li>
-              <li><button onClick={() => document.getElementById('gallery')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Globe size={12}/> Project Map</button></li>
+              <li><button onClick={() => document.getElementById('map')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Globe size={12}/> Project Map</button></li>
               <li><button onClick={() => openModal('Emergency Procedures', <EmergencyProcedures />)} className="hover:text-orange-500 transition-colors flex items-center gap-2 text-red-400"><AlertCircle size={12}/> Emergency SOP</button></li>
             </ul>
           </div>
