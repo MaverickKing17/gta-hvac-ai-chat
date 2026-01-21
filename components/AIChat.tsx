@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Send, X, Bot, User, Sparkles } from 'lucide-react';
+import { MessageSquare, Send, X, Bot, User, Sparkles, ChevronRight } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import { COMPANY_NAME, TAGLINE } from '../constants';
 
 const AIChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'ai' | 'user'; text: string }[]>([
-    { role: 'ai', text: `Hi! I'm the Atomic Air Assistant. How can I help you with your heating, cooling, or rebates today?` }
+    { role: 'ai', text: `Hi! I'm your Atomic Air Assistant. How can I help you with your heating, cooling, or the $10,500 government rebate today?` }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -39,28 +39,26 @@ const AIChat: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: userText,
         config: {
-          systemInstruction: `You are a helpful, expert AI assistant for "${COMPANY_NAME}". ${TAGLINE}. Our family has been serving Toronto and the GTA since 1978, with the company officially established in 1984.
+          systemInstruction: `You are a helpful, expert AI assistant for "${COMPANY_NAME}". ${TAGLINE}. Our family has been serving Toronto and the GTA since 1978.
 
-Key Selling Propositions to emphasize:
-1. Legacy of Trust: We are a multi-generational family business. We value honest communication and high-integrity service above all else. We treat every home as if it were our own.
-2. Commitment to Education: We believe in empowering our customers. Don't just give simple answers; explain the 'why' behind HVAC choices (e.g., why a heat pump is efficient) so customers feel confident and informed.
-3. Rebate Mastery: We are experts in the Home Efficiency Rebate Plus program (up to $10,500) and help users maximize their financial benefits.
-4. Technical Excellence: We specialize in high-efficiency boilers, cold-climate heat pumps, and complex hydronic snow-melting systems.
+Core Philosophies:
+1. Legacy of Trust: We are a multi-generational family business. We treat every home with high integrity.
+2. Educational Expertise: Don't just answer; educate. Explain the "how" and "why" to build customer confidence.
 
-Our services: Boilers, Furnaces, AC, Heat Pumps, Snow Melting, Tankless Water Heaters, and Commercial HVAC.
-Service Area: Toronto, Etobicoke, Mississauga, and the GTA.
+Knowledge:
+- Cold-Climate Heat Pumps: Mitsubishi/Daikin systems efficient to -25C. Ice/clogs are common issues.
+- Hydronic Snow Melt: PEX tubing with glycol. Maintenance is key before first frost.
+- Rebates: Home Efficiency Rebate Plus ($10,500).
 
-Goal: Provide expert advice, educate the user on modern HVAC technology, clarify rebate eligibility, and encourage booking a professional consultation.
-Tone: Warm, professional, patient, and deeply knowledgeable.
-Short, concise, yet educational answers are best.`
+Tone: Professional, helpful, patient. Short answers are better.`
         }
       });
 
-      const aiText = response.text || "I'm having a bit of trouble connecting. Please try again or call us directly!";
+      const aiText = response.text || "I'm having a bit of trouble connecting. Please try again or call us at 647.964.8579!";
       setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
     } catch (error) {
       console.error(error);
-      setMessages(prev => [...prev, { role: 'ai', text: "Sorry, I'm offline right now. Feel free to call us at 647.964.8579!" }]);
+      setMessages(prev => [...prev, { role: 'ai', text: "Sorry, I'm offline right now. Feel free to call us directly!" }]);
     } finally {
       setIsLoading(false);
     }
@@ -70,70 +68,65 @@ Short, concise, yet educational answers are best.`
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-16 h-16 bg-orange-600 hover:bg-orange-700 text-white rounded-full flex items-center justify-center shadow-2xl transition-all hover:scale-110 z-[60] group ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-8 right-8 w-14 h-14 bg-slate-900 text-white rounded-full flex items-center justify-center shadow-xl transition-all hover:scale-110 z-[60] ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
       >
-        <MessageSquare size={28} />
-        <div className="absolute -top-12 right-0 glass-card px-4 py-2 rounded-xl text-xs font-bold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-          Chat with AI Assistant
-        </div>
+        <Sparkles size={24} />
       </button>
 
-      <div className={`fixed bottom-6 right-6 w-[90vw] sm:w-[400px] h-[600px] max-h-[80vh] glass-card rounded-3xl shadow-2xl z-[70] flex flex-col transition-all duration-500 overflow-hidden border-orange-500/20 ${isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-90 pointer-events-none'}`}>
-        <div className="p-6 bg-gradient-to-r from-orange-600 to-orange-700 flex items-center justify-between shadow-lg">
+      <div className={`fixed bottom-8 right-8 w-[90vw] sm:w-[380px] h-[600px] max-h-[85vh] bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] z-[70] flex flex-col transition-all duration-300 border border-slate-200 overflow-hidden ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}>
+        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-              <Sparkles size={20} className="text-white" />
+            <div className="w-8 h-8 bg-orange-600 rounded flex items-center justify-center shadow-sm">
+              <Bot size={18} className="text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-white">Atomic Expert AI</h3>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-                <p className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Always Online</p>
-              </div>
+              <h3 className="font-bold text-slate-900 text-sm">Expert Assistant</h3>
+              <p className="text-[10px] text-green-600 font-bold uppercase tracking-widest">Powered by Atomic AI</p>
             </div>
           </div>
-          <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors">
-            <X size={24} />
+          <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-900 p-1">
+            <X size={20} />
           </button>
         </div>
 
-        <div ref={scrollRef} className="flex-grow p-6 overflow-y-auto space-y-6 bg-gray-950/20">
+        <div ref={scrollRef} className="flex-grow p-6 overflow-y-auto space-y-4 bg-white">
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${m.role === 'user' ? 'bg-orange-600 text-white rounded-tr-none' : 'bg-white/5 border border-white/10 text-gray-200 rounded-tl-none'}`}>
+              <div className={`max-w-[85%] p-4 rounded-xl text-sm leading-relaxed ${m.role === 'user' ? 'bg-orange-600 text-white shadow-md' : 'bg-slate-100 text-slate-800'}`}>
                 {m.text}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none flex gap-1 items-center">
-                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></div>
-                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+              <div className="bg-slate-100 p-4 rounded-xl flex gap-1">
+                <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
+                <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
               </div>
             </div>
           )}
         </div>
 
-        <div className="p-4 border-t border-white/10">
-          <div className="relative">
+        <div className="p-4 bg-white border-t border-slate-100">
+          <div className="relative flex items-center gap-2">
             <input 
               type="text" 
-              placeholder="Ask about rebates or booking..." 
+              placeholder="How can I help you?" 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl pl-6 pr-14 py-4 text-white focus:outline-none focus:border-orange-500 transition-colors"
+              className="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-slate-900 transition-colors"
             />
             <button 
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
-              className="absolute right-2 top-2 p-2.5 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 disabled:hover:bg-orange-600 text-white rounded-xl transition-all"
+              className="p-3 bg-slate-900 text-white rounded-lg disabled:opacity-50 hover:bg-slate-800 transition-colors shadow-sm"
             >
-              <Send size={20} />
+              <Send size={18} />
             </button>
           </div>
+          <p className="text-[9px] text-slate-400 text-center mt-3 font-medium">Atomic Air AI may provide automated info. Call us for verified quotes.</p>
         </div>
       </div>
     </>

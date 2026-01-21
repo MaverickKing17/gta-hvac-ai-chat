@@ -4,81 +4,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atomic Air | Toronto's Trusted Family HVAC Since 1978</title>
+    <title>Atomic Air | Toronto HVAC Excellence Since 1978</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --ms-orange: #FF6B00;
+        --ms-slate-900: #0f172a;
+        --ms-slate-500: #64748b;
+        --ms-slate-100: #f1f5f9;
+      }
       body {
-        font-family: 'Inter', sans-serif;
-        background-color: #020617;
-        color: #f8fafc;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #ffffff;
+        color: var(--ms-slate-900);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
       }
-      h1, h2, h3, h4, .font-outfit {
-        font-family: 'Outfit', sans-serif;
-        letter-spacing: -0.02em;
+      h1, h2, h3, h4 {
+        letter-spacing: -0.025em;
+        font-weight: 700;
       }
-      .mesh-bg {
-        background-color: #020617;
-        background-image: 
-          radial-gradient(at 0% 0%, hsla(25,100%,10%,1) 0, transparent 60%), 
-          radial-gradient(at 100% 0%, hsla(200,100%,10%,1) 0, transparent 60%), 
-          radial-gradient(at 50% 100%, hsla(25,100%,8%,1) 0, transparent 60%);
+      .pro-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
+      .pro-card:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        transform: translateY(-2px);
       }
-      .sticky-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: blur(16px);
+      .ms-button {
+        border-radius: 4px;
+        transition: all 0.1s ease;
       }
-      @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-12px); }
-        100% { transform: translateY(0px); }
+      .ms-button:active {
+        transform: scale(0.98);
       }
-      .animate-float {
-        animation: float 4s ease-in-out infinite;
+      .mesh-accent {
+        background: radial-gradient(circle at 50% -20%, rgba(255,107,0,0.05) 0%, transparent 70%);
       }
       ::selection {
         background: #FF6B00;
         color: white;
       }
-      /* Custom Scrollbar */
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #020617;
+        background: #f8fafc;
       }
       ::-webkit-scrollbar-thumb {
-        background: #1e293b;
-        border-radius: 5px;
-        border: 2px solid #020617;
+        background: #cbd5e1;
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #FF6B00;
+        background: #94a3b8;
       }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
-</head>
-  <body>
+  </head>
+  <body class="mesh-accent">
     <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

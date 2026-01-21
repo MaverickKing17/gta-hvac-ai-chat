@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, ChevronRight } from 'lucide-react';
 import { COMPANY_NAME, PHONE } from '../constants';
 
 interface NavbarProps {
@@ -12,11 +12,10 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
   const navItems = [
     { label: 'Home', id: 'hero' },
-    { label: 'Story', id: 'story' },
-    { label: 'Services', id: 'services' },
-    { label: 'Gallery', id: 'gallery' },
-    { label: 'Rebates', id: 'rebates' },
-    { label: 'Contact', id: 'contact' },
+    { label: 'Our Legacy', id: 'story' },
+    { label: 'Solutions', id: 'services' },
+    { label: 'Project Gallery', id: 'gallery' },
+    { label: 'Rebate Estimator', id: 'rebates' },
   ];
 
   const scrollTo = (id: string) => {
@@ -31,51 +30,54 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   };
 
   return (
-    <nav className="sticky-nav glass-card border-x-0 border-t-0 py-4 px-6 md:px-12 flex items-center justify-between z-50">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 py-3 px-6 md:px-12 flex items-center justify-between">
       <div 
-        className="flex items-center gap-2 cursor-pointer" 
+        className="flex items-center gap-3 cursor-pointer group" 
         onClick={() => scrollTo('hero')}
       >
-        <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center font-bold text-xl text-white">A</div>
-        <span className="font-bold text-lg hidden sm:block tracking-tight text-white">{COMPANY_NAME}</span>
+        <div className="w-8 h-8 bg-orange-600 flex items-center justify-center font-bold text-lg text-white rounded-[4px] shadow-sm">A</div>
+        <span className="font-bold text-lg tracking-tight text-slate-900 group-hover:text-orange-600 transition-colors">{COMPANY_NAME}</span>
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex items-center gap-8">
+      <div className="hidden lg:flex items-center gap-10">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => scrollTo(item.id)}
-            className={`text-sm font-medium transition-colors hover:text-orange-500 ${
-              activeSection === item.id ? 'text-orange-500' : 'text-gray-400'
+            className={`text-[13px] font-medium transition-all relative py-2 ${
+              activeSection === item.id ? 'text-slate-900 border-b-2 border-orange-600' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             {item.label}
           </button>
         ))}
-        <a 
-          href={`tel:${PHONE}`}
-          className="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2 transition-all transform hover:scale-105"
-        >
-          <Phone size={16} />
-          {PHONE}
-        </a>
       </div>
 
-      {/* Mobile Toggle */}
-      <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <X /> : <Menu />}
-      </button>
+      <div className="flex items-center gap-4">
+        <a 
+          href={`tel:${PHONE}`}
+          className="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 ms-button text-[13px] font-semibold flex items-center gap-2 shadow-sm"
+        >
+          {PHONE}
+          <ChevronRight size={14} />
+        </a>
+        
+        {/* Mobile Toggle */}
+        <button className="lg:hidden text-slate-900 p-2" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="absolute top-full left-0 w-full glass-card p-6 border-x-0 flex flex-col gap-6 md:hidden animate-in fade-in slide-in-from-top-4 duration-300">
+        <div className="absolute top-full left-0 w-full bg-white border-b border-slate-200 p-8 flex flex-col gap-6 lg:hidden animate-in fade-in slide-in-from-top-4 duration-200">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className={`text-lg font-semibold text-left ${
-                activeSection === item.id ? 'text-orange-500' : 'text-gray-200'
+              className={`text-xl font-semibold text-left ${
+                activeSection === item.id ? 'text-orange-600' : 'text-slate-700'
               }`}
             >
               {item.label}
@@ -83,10 +85,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           ))}
           <a 
             href={`tel:${PHONE}`}
-            className="bg-orange-600 text-white px-6 py-4 rounded-xl text-center font-bold flex items-center justify-center gap-3"
+            className="bg-slate-900 text-white px-6 py-4 rounded-lg text-center font-bold"
           >
-            <Phone size={20} />
-            {PHONE}
+            Call {PHONE}
           </a>
         </div>
       )}

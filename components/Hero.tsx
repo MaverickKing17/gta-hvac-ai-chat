@@ -1,68 +1,80 @@
 
 import React from 'react';
-import { ArrowRight, MessageSquare, ShieldCheck, ChevronDown } from 'lucide-react';
-import { TAGLINE } from '../constants';
+import { ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative min-h-[95vh] flex flex-col items-center justify-center text-center px-6 py-20 overflow-hidden">
-      {/* Dynamic Background */}
-      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-orange-600/20 blur-[150px] rounded-full mix-blend-screen opacity-50 animate-pulse"></div>
-      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full mix-blend-screen opacity-50"></div>
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none"></div>
+    <div className="relative bg-white pt-24 pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1 bg-slate-100 rounded-full text-slate-600 text-[11px] font-bold uppercase tracking-wider">
+            <ShieldCheck size={14} className="text-orange-600" />
+            Licensed Toronto Master Contractors
+          </div>
 
-      <div className="relative z-10 max-w-6xl">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-500/10 border border-orange-500/30 rounded-full text-orange-400 text-[10px] font-black uppercase tracking-[0.25em] mb-10 animate-float shadow-2xl shadow-orange-500/10">
-          <ShieldCheck size={12} className="text-orange-500" />
-          <span>Premier Mechanical Solutions</span>
-        </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.1] tracking-tight">
+            Quality HVAC <br />
+            <span className="text-orange-600">Built for Toronto.</span>
+          </h1>
 
-        <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-black mb-10 leading-[0.95] tracking-tighter">
-          Mastering <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-orange-600 drop-shadow-[0_0_30px_rgba(255,107,0,0.3)]">
-            Indoor Climate
-          </span>
-        </h1>
+          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl leading-relaxed">
+            Since 1978, we've provided high-integrity heating and cooling solutions. 
+            From high-efficiency heat pumps to luxury hydronics, we engineer comfort.
+          </p>
 
-        <p className="text-xl md:text-3xl text-gray-300 mb-14 max-w-4xl mx-auto leading-tight font-light tracking-tight">
-          {TAGLINE}. High-performance heating, cooling, and hydronics engineered for the modern Toronto home.
-        </p>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <button 
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 ms-button text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
+            >
+              View Our Solutions
+              <ArrowRight size={18} />
+            </button>
+            
+            <button 
+              onClick={() => document.getElementById('rebates')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full sm:w-auto bg-white border border-slate-300 hover:border-slate-900 text-slate-900 px-8 py-4 ms-button text-sm font-bold flex items-center justify-center gap-2"
+            >
+              Estimate Your Rebate
+              <ChevronRight size={18} />
+            </button>
+          </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <button 
-            onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
-            className="w-full sm:w-auto bg-orange-600 hover:bg-orange-500 text-white px-12 py-6 rounded-2xl text-xl font-black flex items-center justify-center gap-3 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,107,0,0.3)]"
-          >
-            EXPLORE PROJECTS
-            <ArrowRight size={22} strokeWidth={3} />
-          </button>
-          
-          <button 
-            onClick={() => window.dispatchEvent(new CustomEvent('openChat'))}
-            className="w-full sm:w-auto glass-card hover:bg-white/10 text-white px-12 py-6 rounded-2xl text-xl font-black flex items-center justify-center gap-3 transition-all border border-white/20"
-          >
-            <MessageSquare size={22} className="text-orange-500" strokeWidth={3} />
-            ASK OUR EXPERTS
-          </button>
-        </div>
-
-        <div className="mt-28 grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-white/5 pt-12">
-          {[
-            { value: '46+', label: 'Years of Trust' },
-            { value: '10k+', label: 'Systems Tuned' },
-            { value: '24/7', label: 'Emergency Response' },
-            { value: 'Elite', label: 'GCP/HRAI Certified' }
-          ].map((stat, i) => (
-            <div key={i} className="flex flex-col items-center gap-1 group">
-              <span className="text-4xl font-black text-white group-hover:text-orange-500 transition-colors duration-500">{stat.value}</span>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500 font-bold">{stat.label}</span>
+          <div className="mt-16 flex items-center gap-8 grayscale opacity-50">
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Trusted By</span>
+            <div className="flex gap-6 items-center">
+              <span className="text-lg font-black italic text-slate-900">Carrier</span>
+              <span className="text-lg font-black italic text-slate-900">Mitsubishi</span>
+              <span className="text-lg font-black italic text-slate-900">Viessmann</span>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20 hidden md:block">
-        <ChevronDown size={32} />
+        <div className="relative lg:block">
+          <div className="relative bg-slate-100 rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+            <img 
+              src="https://picsum.photos/seed/atomic-pro/1000/800" 
+              alt="Professional HVAC Installation" 
+              className="w-full h-auto object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            
+            <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/90 backdrop-blur shadow-xl rounded-xl border border-slate-200">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">4.9</div>
+                <div>
+                  <p className="font-bold text-slate-900 text-sm">Top Rated Service</p>
+                  <p className="text-xs text-slate-500">Based on 500+ Local Reviews</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Decorative Elements */}
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-600/5 blur-3xl rounded-full"></div>
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-slate-900/5 blur-3xl rounded-full"></div>
+        </div>
       </div>
     </div>
   );

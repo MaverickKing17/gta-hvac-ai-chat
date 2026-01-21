@@ -17,7 +17,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['hero', 'story', 'services', 'gallery', 'rebates', 'testimonials', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -35,36 +35,36 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen mesh-bg selection:bg-orange-500/30">
+    <div className="relative min-h-screen bg-white">
       <StickyEmergencyBar />
       <Navbar activeSection={activeSection} />
       
       <main>
-        <section id="hero">
+        <section id="hero" className="border-b border-slate-100">
           <Hero />
         </section>
         
-        <section id="story" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="story" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/50">
           <Story />
         </section>
 
-        <section id="services" className="py-24 px-6 md:px-12 lg:px-24 bg-black/20">
+        <section id="services" className="py-24 px-6 md:px-12 lg:px-24">
           <Services />
         </section>
 
-        <section id="gallery" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="gallery" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/30">
           <ProjectGallery />
         </section>
 
-        <section id="rebates" className="py-24 px-6 md:px-12 lg:px-24 bg-orange-600/5">
+        <section id="rebates" className="py-32 px-6 md:px-12 lg:px-24 border-y border-slate-100">
           <RebateCalculator />
         </section>
 
-        <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24 bg-black/20">
+        <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24">
           <Testimonials />
         </section>
 
-        <section id="contact" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="contact" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-900 text-white">
           <Footer />
         </section>
       </main>
