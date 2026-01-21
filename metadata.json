@@ -1,0 +1,7 @@
+{
+  "name": "Atomic Air HVAC Redesign",
+  "description": "A high-conversion, modern HVAC service platform with integrated AI assistant, interactive rebate calculator, and high-quality project gallery for Toronto's premier heating and cooling contractor.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
