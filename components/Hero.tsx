@@ -1,78 +1,68 @@
 
 import React from 'react';
-import { ArrowRight, MessageSquare, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, MessageSquare, ShieldCheck, ChevronDown } from 'lucide-react';
 import { TAGLINE } from '../constants';
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 py-20 overflow-hidden">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-orange-600/10 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full"></div>
+    <div className="relative min-h-[95vh] flex flex-col items-center justify-center text-center px-6 py-20 overflow-hidden">
+      {/* Dynamic Background */}
+      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-orange-600/20 blur-[150px] rounded-full mix-blend-screen opacity-50 animate-pulse"></div>
+      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full mix-blend-screen opacity-50"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-5xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-400 text-xs font-bold uppercase tracking-wider mb-8 animate-float">
-          <ShieldCheck size={14} />
-          <span>Licensed & Insured Toronto Experts</span>
+      <div className="relative z-10 max-w-6xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-500/10 border border-orange-500/30 rounded-full text-orange-400 text-[10px] font-black uppercase tracking-[0.25em] mb-10 animate-float shadow-2xl shadow-orange-500/10">
+          <ShieldCheck size={12} className="text-orange-500" />
+          <span>Premier Mechanical Solutions</span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-          Toronto's Trusted <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-blue-400">
-            Family HVAC Since 1978
+        <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-black mb-10 leading-[0.95] tracking-tighter">
+          Mastering <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-orange-600 drop-shadow-[0_0_30px_rgba(255,107,0,0.3)]">
+            Indoor Climate
           </span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-          {TAGLINE}. Specializing in high-efficiency heat pumps, modern boilers, and luxury snow melting systems. Up to $10,500 in rebates available.
+        <p className="text-xl md:text-3xl text-gray-300 mb-14 max-w-4xl mx-auto leading-tight font-light tracking-tight">
+          {TAGLINE}. High-performance heating, cooling, and hydronics engineered for the modern Toronto home.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <button 
             onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
-            className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700 text-white px-10 py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-orange-600/20"
+            className="w-full sm:w-auto bg-orange-600 hover:bg-orange-500 text-white px-12 py-6 rounded-2xl text-xl font-black flex items-center justify-center gap-3 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,107,0,0.3)]"
           >
-            View Recent Projects
-            <ArrowRight size={20} />
+            EXPLORE PROJECTS
+            <ArrowRight size={22} strokeWidth={3} />
           </button>
           
           <button 
             onClick={() => window.dispatchEvent(new CustomEvent('openChat'))}
-            className="w-full sm:w-auto glass-card hover:bg-white/10 text-white px-10 py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-2 transition-all"
+            className="w-full sm:w-auto glass-card hover:bg-white/10 text-white px-12 py-6 rounded-2xl text-xl font-black flex items-center justify-center gap-3 transition-all border border-white/20"
           >
-            <MessageSquare size={20} className="text-orange-500" />
-            Chat with AI Expert
+            <MessageSquare size={22} className="text-orange-500" strokeWidth={3} />
+            ASK OUR EXPERTS
           </button>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 opacity-60">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl font-bold text-white">46+</span>
-            <span className="text-xs uppercase tracking-widest text-gray-500">Years Experience</span>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl font-bold text-white">10k+</span>
-            <span className="text-xs uppercase tracking-widest text-gray-500">Projects Done</span>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl font-bold text-white">24/7</span>
-            <span className="text-xs uppercase tracking-widest text-gray-500">Emergency Support</span>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl font-bold text-white">4.9/5</span>
-            <span className="text-xs uppercase tracking-widest text-gray-500">Customer Rating</span>
-          </div>
+        <div className="mt-28 grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-white/5 pt-12">
+          {[
+            { value: '46+', label: 'Years of Trust' },
+            { value: '10k+', label: 'Systems Tuned' },
+            { value: '24/7', label: 'Emergency Response' },
+            { value: 'Elite', label: 'GCP/HRAI Certified' }
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col items-center gap-1 group">
+              <span className="text-4xl font-black text-white group-hover:text-orange-500 transition-colors duration-500">{stat.value}</span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500 font-bold">{stat.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Hero Image Mockup (Blurred Background) */}
-      <div className="mt-24 w-full max-w-6xl mx-auto rounded-3xl overflow-hidden glass-card p-2 relative">
-        <img 
-          src="https://picsum.photos/seed/atomic-hero/1200/500?grayscale" 
-          alt="HVAC Installation Work" 
-          className="w-full h-auto rounded-2xl object-cover opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent"></div>
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20 hidden md:block">
+        <ChevronDown size={32} />
       </div>
     </div>
   );
