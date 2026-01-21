@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Send, X, Bot, User, Sparkles, ChevronRight } from 'lucide-react';
+import { MessageSquare, Send, X, Bot, User, Sparkles, ChevronRight, Terminal } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import { COMPANY_NAME, TAGLINE } from '../constants';
 
 const AIChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'ai' | 'user'; text: string }[]>([
-    { role: 'ai', text: `Hi! I'm your Atomic Air Assistant. How can I help you today? I can explain our high-efficiency systems or guide you through the $10,500 rebate process.` }
+    { role: 'ai', text: `Welcome to Atomic Air Technical Support. I'm your engineering assistant. I can provide detailed specifications on our cold-climate heat pumps or calculate your potential $10,500 government rebate. How may I assist your HVAC planning today?` }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -60,11 +60,11 @@ Tone: Professional, articulate, and helpful. Prioritize clarity and scannability
         }
       });
 
-      const aiText = response.text || "I'm having a bit of trouble connecting. Please try again or call us at 647.964.8579!";
+      const aiText = response.text || "I'm having a bit of trouble connecting to our technical database. Please try again or call our master technicians at 647.964.8579!";
       setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
     } catch (error) {
       console.error(error);
-      setMessages(prev => [...prev, { role: 'ai', text: "Sorry, I'm offline right now. Feel free to call us directly at 647.964.8579 for expert advice!" }]);
+      setMessages(prev => [...prev, { role: 'ai', text: "Service temporarily unavailable. Our engineers are working on it. Please call 647.964.8579 for immediate assistance." }]);
     } finally {
       setIsLoading(false);
     }
@@ -74,81 +74,99 @@ Tone: Professional, articulate, and helpful. Prioritize clarity and scannability
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-8 w-14 h-14 bg-slate-900 text-white rounded-full flex items-center justify-center shadow-xl transition-all hover:scale-110 z-[60] ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-8 right-8 w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-2xl transition-all hover:scale-110 z-[60] border border-white/10 group ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
       >
-        <Sparkles size={24} />
+        <Sparkles size={28} className="group-hover:text-orange-500 transition-colors" />
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-600 rounded-full border-2 border-white animate-pulse"></div>
       </button>
 
-      <div className={`fixed bottom-8 right-8 w-[90vw] sm:w-[400px] h-[650px] max-h-[85vh] bg-white rounded-2xl shadow-[0_24px_64px_-12px_rgba(0,0,0,0.3)] z-[70] flex flex-col transition-all duration-300 border border-slate-200 overflow-hidden ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}`}>
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center shadow-sm">
-              <Bot size={22} className="text-white" />
+      <div className={`fixed bottom-8 right-8 w-[90vw] sm:w-[440px] h-[720px] max-h-[85vh] bg-white rounded-[2.5rem] shadow-[0_32px_80px_-20px_rgba(0,0,0,0.3)] z-[70] flex flex-col transition-all duration-500 ease-out border border-slate-200 overflow-hidden ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0 pointer-events-none scale-95'}`}>
+        
+        {/* Header - Glassmorphism style */}
+        <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-white/80 backdrop-blur-md relative z-10">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg group">
+              <Terminal size={20} className="text-orange-500 group-hover:scale-110 transition-transform" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-sm">Atomic Expert Support</h3>
-              <p className="text-[10px] text-green-600 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                AI Copilot Online
+              <h3 className="font-black text-slate-900 text-sm tracking-tight">Technical Assistant</h3>
+              <p className="text-[9px] text-green-600 font-black uppercase tracking-[0.2em] flex items-center gap-2 mt-0.5">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
+                System Operational
               </p>
             </div>
           </div>
-          <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 transition-colors">
+          <button 
+            onClick={() => setIsOpen(false)} 
+            className="text-slate-400 hover:text-slate-900 p-2.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
+          >
             <X size={20} />
           </button>
         </div>
 
-        <div ref={scrollRef} className="flex-grow p-6 overflow-y-auto space-y-6 bg-slate-50/30">
+        {/* Messages Area - Subtle Tech Grid */}
+        <div ref={scrollRef} className="flex-grow p-8 overflow-y-auto space-y-8 bg-[#fcfdfe] relative">
+          <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }}></div>
+          
           {messages.map((m, i) => (
-            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
               <div 
-                className={`max-w-[90%] p-4 rounded-xl text-sm leading-relaxed whitespace-pre-wrap ${
+                className={`relative max-w-[85%] px-6 py-5 text-[15px] font-medium leading-relaxed ${
                   m.role === 'user' 
-                  ? 'bg-orange-600 text-white shadow-md' 
-                  : 'bg-white text-slate-800 border border-slate-200 shadow-sm'
+                  ? 'bg-slate-900 text-white rounded-[1.5rem] rounded-tr-none shadow-[0_12px_24px_-8px_rgba(15,23,42,0.3)]' 
+                  : 'bg-white text-slate-800 border border-slate-200 rounded-[1.5rem] rounded-tl-none shadow-[0_8px_20px_-6px_rgba(0,0,0,0.05)]'
                 }`}
                 style={{ wordBreak: 'break-word' }}
               >
                 {m.text}
+                <div className={`absolute top-0 ${m.role === 'user' ? '-right-1 border-l-slate-900' : '-left-1 border-r-white'} w-2 h-2`}></div>
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white border border-slate-200 p-4 rounded-xl flex gap-1.5 shadow-sm">
-                <div className="w-2 h-2 bg-slate-300 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-slate-300 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                <div className="w-2 h-2 bg-slate-300 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+              <div className="bg-white border border-slate-200 px-6 py-4 rounded-2xl flex gap-2 shadow-sm">
+                <div className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce [animation-duration:800ms]"></div>
+                <div className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce [animation-duration:800ms] [animation-delay:200ms]"></div>
+                <div className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce [animation-duration:800ms] [animation-delay:400ms]"></div>
               </div>
             </div>
           )}
         </div>
 
-        <div className="p-4 bg-white border-t border-slate-100">
-          <div className="relative flex items-center gap-2">
-            <input 
-              type="text" 
-              placeholder="Ask about heat pumps or rebates..." 
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              className="flex-grow bg-slate-100 border border-slate-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-slate-400 focus:bg-white transition-all placeholder:text-slate-400"
-            />
-            <button 
-              onClick={handleSend}
-              disabled={isLoading || !input.trim()}
-              className="p-3.5 bg-slate-900 text-white rounded-xl disabled:opacity-30 hover:bg-slate-800 transition-all shadow-sm active:scale-95"
-            >
-              <Send size={20} />
-            </button>
+        {/* Input Area */}
+        <div className="p-6 bg-white border-t border-slate-100 relative z-10">
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-600/20 to-slate-900/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+            <div className="relative flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-2 focus-within:bg-white focus-within:border-slate-400 transition-all">
+              <input 
+                type="text" 
+                placeholder="Ask about heat pump specs..." 
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                className="flex-grow bg-transparent px-4 py-3 text-sm font-semibold focus:outline-none placeholder:text-slate-400 text-slate-900"
+              />
+              <button 
+                onClick={handleSend}
+                disabled={isLoading || !input.trim()}
+                className="w-12 h-12 bg-slate-900 text-white rounded-xl disabled:opacity-20 hover:bg-orange-600 transition-all shadow-lg active:scale-95 flex items-center justify-center flex-shrink-0"
+              >
+                <Send size={18} />
+              </button>
+            </div>
           </div>
-          <div className="flex items-center justify-between mt-4 px-1">
-            <p className="text-[10px] text-slate-400 font-medium">Atomic Air Professional AI</p>
+          
+          <div className="flex items-center justify-between mt-5 px-1">
+            <div className="flex items-center gap-2 opacity-40">
+              <div className="w-1.5 h-1.5 bg-slate-900 rounded-full"></div>
+              <p className="text-[9px] text-slate-900 font-black uppercase tracking-[0.2em]">Atomic Engineering Protocol v2.5</p>
+            </div>
             <button 
-              onClick={() => setMessages([{ role: 'ai', text: "Chat history cleared. How else can I help you?" }])}
-              className="text-[10px] text-slate-400 hover:text-slate-600 underline font-medium"
+              onClick={() => setMessages([{ role: 'ai', text: "Technical log cleared. System ready for new inquiries." }])}
+              className="text-[9px] text-slate-400 hover:text-slate-900 font-black uppercase tracking-[0.2em] transition-colors"
             >
-              Clear Chat
+              Reset Session
             </button>
           </div>
         </div>
