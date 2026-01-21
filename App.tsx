@@ -11,12 +11,16 @@ import ServiceAreaMap from './components/ServiceAreaMap';
 import Footer from './components/Footer';
 import AIChat from './components/AIChat';
 import StickyEmergencyBar from './components/StickyEmergencyBar';
+import { ChevronUp } from 'lucide-react';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('hero');
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      // Update Active Section
       const sections = ['hero', 'story', 'services', 'gallery', 'rebates', 'testimonials', 'map', 'contact'];
       const scrollPosition = window.scrollY + 120;
 
@@ -29,11 +33,21 @@ const App: React.FC = () => {
           }
         }
       }
+
+      // Update Scroll Progress & Visibility
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+      setShowScrollTop(window.scrollY > 800);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="relative min-h-screen bg-white">
@@ -76,6 +90,33 @@ const App: React.FC = () => {
           <Footer />
         </section>
       </main>
+
+      {/* Floating Scroll to Top button with Progress Circle */}
+      <button 
+        onClick={scrollToTop}
+        className={`fixed bottom-8 left-8 z-[100] w-14 h-14 bg-white border border-slate-200 rounded-full shadow-2xl flex items-center justify-center text-slate-900 transition-all duration-500 hover:bg-orange-600 hover:text-white hover:border-orange-500 active:scale-95 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12 pointer-events-none'}`}
+        aria-label="Scroll to top"
+      >
+        <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+          <circle 
+            cx="28" cy="28" r="24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            className="opacity-10"
+          />
+          <circle 
+            cx="28" cy="28" r="24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeDasharray="150.79" 
+            strokeDashoffset={150.79 - (150.79 * scrollProgress) / 100} 
+            className="text-orange-500 transition-all duration-200"
+          />
+        </svg>
+        <ChevronUp size={24} strokeWidth={2.5} />
+      </button>
 
       <AIChat />
     </div>

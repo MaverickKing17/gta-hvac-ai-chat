@@ -23,7 +23,7 @@ const Services: React.FC = () => {
 
       <div className="flex flex-col md:flex-row items-start justify-between mb-24 gap-12 relative z-10">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-md text-[9px] font-black uppercase tracking-[0.3em] mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-md text-[9px] font-black uppercase tracking-[0.3em] mb-6 border border-white/10">
             <Icons.Cpu size={12} className="text-orange-500" />
             Precision Mechanical Systems
           </div>
@@ -37,62 +37,65 @@ const Services: React.FC = () => {
           </p>
         </div>
         
-        {/* REDESIGNED: Operational Telemetry Panel */}
+        {/* ENHANCED VISIBILITY: Operational Telemetry Panel */}
         <div className="relative group/status">
-          <div className="absolute -inset-1 bg-gradient-to-r from-orange-600/20 to-slate-900/20 rounded-3xl blur-xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700"></div>
-          <div className="relative bg-slate-950 border border-white/10 rounded-3xl p-8 min-w-[320px] shadow-2xl overflow-hidden">
+          <div className="absolute -inset-1 bg-gradient-to-r from-orange-600/30 to-slate-900/30 rounded-3xl blur-xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700"></div>
+          <div className="relative bg-[#020617] border border-white/15 rounded-3xl p-8 min-w-[320px] shadow-2xl overflow-hidden">
             {/* Background Grid Accent */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '15px 15px' }}></div>
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '15px 15px' }}></div>
             
             {/* Header: Market Status */}
-            <div className="flex items-center justify-between mb-8 relative z-10">
+            <div className="flex items-center justify-between mb-10 relative z-10">
               <div className="space-y-1">
-                <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">Operational Metrics</p>
-                <h4 className="text-white font-black text-xs uppercase tracking-widest">Market Status</h4>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.35em] mb-1">Operational Metrics</p>
+                <h4 className="text-white font-black text-sm uppercase tracking-widest">Market Status</h4>
               </div>
-              <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                <div className="relative w-2 h-2">
+              <div className="flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-2 rounded-full backdrop-blur-md">
+                <div className="relative w-2.5 h-2.5">
                   <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></div>
-                  <div className="relative w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_#22c55e]"></div>
+                  <div className="relative w-2.5 h-2.5 bg-green-500 rounded-full shadow-[0_0_12px_#22c55e]"></div>
                 </div>
-                <span className="text-green-500 text-[10px] font-black uppercase tracking-widest">Active Scan</span>
+                <span className="text-green-500 text-[11px] font-black uppercase tracking-widest">Active Scan</span>
               </div>
             </div>
 
-            {/* Metrics List */}
-            <div className="space-y-6 relative z-10">
+            {/* Metrics List - Enhanced Contrast */}
+            <div className="space-y-8 relative z-10">
               <div className="space-y-3">
                 <div className="flex justify-between items-end">
-                  <span className="text-slate-400 font-bold text-[11px] uppercase tracking-wider">Residential Projects</span>
-                  <span className="text-white font-black text-sm tabular-nums">94.2% <span className="text-[10px] text-slate-500">EF.</span></span>
+                  <span className="text-white/80 font-black text-[12px] uppercase tracking-wider">Residential Projects</span>
+                  <span className="text-white font-black text-lg tabular-nums">94.2% <span className="text-[10px] text-orange-500 ml-1">EF.</span></span>
                 </div>
-                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden flex">
-                  <div className="h-full bg-gradient-to-r from-orange-600 to-orange-400 w-[94.2%] rounded-full shadow-[0_0_10px_rgba(234,88,12,0.3)]"></div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden flex border border-white/5">
+                  <div className="h-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 w-[94.2%] rounded-full shadow-[0_0_15px_rgba(234,88,12,0.4)]"></div>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <div className="flex justify-between items-end">
-                  <span className="text-slate-400 font-bold text-[11px] uppercase tracking-wider">Commercial Retrofits</span>
-                  <span className="text-white font-black text-sm tabular-nums">88.7% <span className="text-[10px] text-slate-500">EF.</span></span>
+                  <span className="text-white/80 font-black text-[12px] uppercase tracking-wider">Commercial Retrofits</span>
+                  <span className="text-white font-black text-lg tabular-nums">88.7% <span className="text-[10px] text-slate-400 ml-1">EF.</span></span>
                 </div>
-                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden flex">
-                  <div className="h-full bg-gradient-to-r from-slate-600 to-slate-400 w-[88.7%] rounded-full"></div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden flex border border-white/5">
+                  <div className="h-full bg-gradient-to-r from-slate-500 to-slate-400 w-[88.7%] rounded-full shadow-[0_0_10px_rgba(255,255,255,0.1)]"></div>
                 </div>
               </div>
             </div>
 
-            {/* Technical Footer Readout */}
-            <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between opacity-40">
+            {/* Technical Footer Readout - Increased Visibility */}
+            <div className="mt-10 pt-8 border-t border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-2 group-hover/status:text-orange-400 transition-colors">
+                <Icons.Activity size={14} className="text-orange-500" />
+                <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em]">Signal: 100%</span>
+              </div>
               <div className="flex items-center gap-2">
-                <Icons.Activity size={12} className="text-orange-500" />
-                <span className="text-[8px] font-black text-white uppercase tracking-[0.2em]">Signal: 100%</span>
+                <Icons.Database size={12} className="text-slate-500" />
+                <span className="text-[10px] font-black text-white/90 uppercase tracking-[0.2em]">Uptime: 99.9%</span>
               </div>
-              <span className="text-[8px] font-black text-white uppercase tracking-[0.2em]">Uptime: 99.9%</span>
             </div>
             
             {/* Live Scan Line Animation */}
-            <div className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500/30 to-transparent animate-[scan_4s_ease-in-out_infinite]"></div>
+            <div className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-[scan_4s_ease-in-out_infinite] shadow-[0_0_10px_#ea580c] opacity-50"></div>
           </div>
         </div>
       </div>
@@ -162,7 +165,7 @@ const Services: React.FC = () => {
       <div className="mt-24 p-12 bg-slate-950 rounded-[3rem] text-white flex flex-col md:flex-row items-center justify-between gap-12 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 100% 0%, #FF6B00 0%, transparent 50%)' }}></div>
         <div className="relative z-10 flex items-center gap-8">
-          <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-orange-500">
+          <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-orange-500 shadow-[0_0_30px_rgba(255,107,0,0.2)]">
             <Icons.ShieldCheck size={32} />
           </div>
           <div>
