@@ -57,11 +57,11 @@ const App: React.FC = () => {
           <ProjectGallery />
         </section>
 
-        <section id="rebates" className="py-32 px-6 md:px-12 lg:px-24 border-y border-slate-100">
+        <section id="rebates" className="py-32 px-6 md:px-12 lg:px-24 border-y border-slate-100 overflow-hidden">
           <RebateCalculator />
         </section>
 
-        <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/50">
           <Testimonials />
         </section>
 
