@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { 
   Mail, Phone, Instagram, Facebook, Send, ShieldCheck, 
   MapPin, ExternalLink, Globe, Lock, LifeBuoy, FileText, 
-  X, ChevronRight, Scale, BookOpen, Wrench, Award, AlertCircle 
+  X, ChevronRight, Scale, BookOpen, Wrench, Award, AlertCircle,
+  Database, Activity, MessageSquare
 } from 'lucide-react';
 import { COMPANY_NAME, PHONE, EMAIL } from '../constants';
 
@@ -27,9 +28,9 @@ const Footer: React.FC = () => {
       
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Top Section: CTA & Newsletter */}
+        {/* Top Section: Branding & Technical Consult Form */}
         <div className="grid lg:grid-cols-2 gap-24 pb-24 border-b border-white/5">
-          <div>
+          <div className="flex flex-col justify-center">
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-orange-500">
               <ShieldCheck size={14} />
               Field Operations Active
@@ -39,55 +40,79 @@ const Footer: React.FC = () => {
               <span className="text-orange-600">The Future.</span>
             </h2>
             <p className="text-slate-400 mb-12 text-xl leading-relaxed max-w-lg font-medium">
-              Join 5,000+ GTA homeowners receiving seasonal technical updates and efficiency optimization tips.
+              Ready to optimize your home's mechanical core? Submit a field inquiry for a precision HVAC consultation.
             </p>
             
-            <div className="relative max-w-md group">
-              <input 
-                type="email" 
-                placeholder="Engineering Alert Email" 
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-bold text-sm"
-              />
-              <button className="absolute right-3 top-3 bottom-3 bg-orange-600 hover:bg-orange-500 text-white px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2">
-                <Send size={18} />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-end space-y-12">
-            <div className="grid sm:grid-cols-2 gap-12">
-              <div className="flex items-start gap-6 group cursor-pointer" onClick={() => window.location.href = `tel:${PHONE}`}>
-                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-xl">
-                  <Phone size={24} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Emergency Dispatch</p>
-                  <p className="text-2xl font-black text-white hover:text-orange-500 transition-colors tracking-tighter">{PHONE}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-6 group cursor-pointer" onClick={() => window.location.href = `mailto:${EMAIL}`}>
-                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-xl">
-                  <Mail size={24} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">General Inquiry</p>
-                  <p className="text-xl font-black text-white hover:text-orange-500 transition-colors tracking-tight break-all">{EMAIL}</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Certification Badges */}
-            <div className="flex flex-wrap items-center gap-8 pt-8 opacity-40 hover:opacity-100 transition-opacity">
+            <div className="flex flex-wrap items-center gap-8 pt-4 opacity-60">
               <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
                 <Award size={14} className="text-orange-500" /> TSSA CERTIFIED
               </div>
               <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
                 <Award size={14} className="text-orange-500" /> HRAI MEMBER
               </div>
-              <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
-                <Award size={14} className="text-orange-500" /> MASTER TECH L01
-              </div>
             </div>
+          </div>
+
+          {/* Formspree Integrated Contact Form */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-orange-600/20 to-slate-800 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
+            <form 
+              action="https://formspree.io/f/xojjbbza" 
+              method="POST"
+              className="relative bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 space-y-6 backdrop-blur-xl"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 bg-orange-600/20 rounded-xl flex items-center justify-center text-orange-500">
+                  <Database size={18} />
+                </div>
+                <h3 className="text-white font-black uppercase tracking-widest text-xs">Technical Consult Request</h3>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input 
+                  type="text" 
+                  name="name"
+                  placeholder="Full Name" 
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
+                />
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Email Address" 
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm"
+                />
+              </div>
+
+              <select 
+                name="system_type"
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm appearance-none"
+              >
+                <option value="" className="bg-slate-900">Select System Interest</option>
+                <option value="heat_pump" className="bg-slate-900">Cold-Climate Heat Pump</option>
+                <option value="boiler" className="bg-slate-900">High-Efficiency Boiler</option>
+                <option value="snow_melt" className="bg-slate-900">Snow Melting System</option>
+                <option value="service" className="bg-slate-900">Emergency Repair / Service</option>
+              </select>
+
+              <textarea 
+                name="message"
+                placeholder="Mission Brief / Project Details" 
+                rows={4}
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-all font-bold text-sm resize-none"
+              ></textarea>
+
+              <button 
+                type="submit"
+                className="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-xl active:scale-[0.98]"
+              >
+                Initialize Request
+                <Send size={16} />
+              </button>
+            </form>
           </div>
         </div>
 
