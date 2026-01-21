@@ -8,6 +8,14 @@ export const EMAIL = "info@atomicairhvac.ca";
 export const PRIMARY_COLOR = "#FF6B00";
 export const REBATE_MAX_VALUE = 10500;
 
+export interface ProjectExtended extends Project {
+  systemId: string;
+  efficiency: string;
+  year: string;
+  components: string[];
+  location: string;
+}
+
 export const SERVICES: Service[] = [
   {
     id: 'boilers',
@@ -59,13 +67,79 @@ export const SERVICES: Service[] = [
   }
 ];
 
-export const PROJECTS: Project[] = [
-  { id: '1', title: 'Commercial Boiler Retrofit', category: 'Commercial', imageUrl: 'https://picsum.photos/seed/hvac1/800/600', description: 'Complete system overhaul for a mid-rise residential building.' },
-  { id: '2', title: 'Modern Home Heat Pump', category: 'Residential', imageUrl: 'https://picsum.photos/seed/hvac2/800/1000', description: 'Quiet cold-climate heat pump installation in Etobicoke.' },
-  { id: '3', title: 'Snow Melt Driveway', category: 'Specialty', imageUrl: 'https://picsum.photos/seed/hvac3/800/600', description: 'Custom hydronic snow melting system for a luxury residence.' },
-  { id: '4', title: 'Industrial Rooftop AC', category: 'Commercial', imageUrl: 'https://picsum.photos/seed/hvac4/800/800', description: 'Dual-unit rooftop replacement for logistics center.' },
-  { id: '5', title: 'Tankless Upgrade', category: 'Residential', imageUrl: 'https://picsum.photos/seed/hvac5/800/600', description: 'Space-saving tankless conversion with high-efficiency venting.' },
-  { id: '6', title: 'Heritage Home HVAC', category: 'Residential', imageUrl: 'https://picsum.photos/seed/hvac6/800/1200', description: 'Hidden ductwork solution for a Victorian renovation.' }
+export const PROJECTS: ProjectExtended[] = [
+  { 
+    id: '1', 
+    title: 'Industrial Boiler Array', 
+    category: 'Commercial', 
+    imageUrl: 'https://images.unsplash.com/photo-1581094288338-2314dddb79a9?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Complete multi-stage boiler system for a high-rise retrofit. Focused on hydraulic separation and cascading logic.',
+    systemId: 'AT-BO-2024-C1',
+    efficiency: '98.5% AFUE',
+    year: '2024',
+    location: 'Downtown Toronto',
+    components: ['Viessmann Vitodens', 'Grundfos Pumps', 'Weben-Jarco Tanks']
+  },
+  { 
+    id: '2', 
+    title: 'Cold-Climate Heat Pump', 
+    category: 'Residential', 
+    imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Installation of a dual-fuel hybrid system designed to operate efficiently down to -25C.',
+    systemId: 'AT-HP-2025-R1',
+    efficiency: '3.8 COP @ -15C',
+    year: '2025',
+    location: 'Etobicoke',
+    components: ['Mitsubishi Zuba', 'Ecobee Premium', 'Custom Plenums']
+  },
+  { 
+    id: '3', 
+    title: 'Clean Mechanical Room', 
+    category: 'Residential', 
+    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Copper-dominant hydronic layout for a luxury residence with 12 distinct heating zones.',
+    systemId: 'AT-HY-2023-R4',
+    efficiency: 'System Peak 96%',
+    year: '2023',
+    location: 'Oakville',
+    components: ['Copper L-Type', 'Caleffi Manifolds', 'Tekmar Controls']
+  },
+  { 
+    id: '4', 
+    title: 'Rooftop Package Units', 
+    category: 'Commercial', 
+    imageUrl: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Crane-assisted replacement of two 15-ton rooftop units for a medical office building.',
+    systemId: 'AT-RT-2024-C3',
+    efficiency: '14.5 IEER',
+    year: '2024',
+    location: 'Mississauga',
+    components: ['Carrier WeatherExpert', 'Economizer Controls']
+  },
+  { 
+    id: '5', 
+    title: 'Smart Zone Management', 
+    category: 'Residential', 
+    imageUrl: 'https://images.unsplash.com/photo-1590059132218-4b3e8c9c7d1e?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Whole-home integration of smart thermostats with legacy high-velocity air handlers.',
+    systemId: 'AT-SM-2024-R9',
+    efficiency: '22% Energy Savings',
+    year: '2024',
+    location: 'North York',
+    components: ['Nest Learning Gen 3', 'Aprilaire Humidifier']
+  },
+  { 
+    id: '6', 
+    title: 'Hydronic Snow Melt Hub', 
+    category: 'Specialty', 
+    imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1000', 
+    description: 'Custom PEX-A driveway heating system with automated moisture and temp sensing.',
+    systemId: 'AT-SM-2025-S2',
+    efficiency: '94% Fuel Utilization',
+    year: '2025',
+    location: 'Forest Hill',
+    components: ['Rehau PEX-A', 'Snow Sensor S100', 'Plate Heat Exchanger']
+  }
 ];
 
 export const TIMELINE: TimelineEvent[] = [
