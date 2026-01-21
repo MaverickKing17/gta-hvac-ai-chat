@@ -7,6 +7,7 @@ import Services from './components/Services';
 import ProjectGallery from './components/ProjectGallery';
 import RebateCalculator from './components/RebateCalculator';
 import Testimonials from './components/Testimonials';
+import ServiceAreaMap from './components/ServiceAreaMap';
 import Footer from './components/Footer';
 import AIChat from './components/AIChat';
 import StickyEmergencyBar from './components/StickyEmergencyBar';
@@ -16,7 +17,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'story', 'services', 'gallery', 'rebates', 'testimonials', 'contact'];
+      const sections = ['hero', 'story', 'services', 'gallery', 'rebates', 'testimonials', 'map', 'contact'];
       const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {
@@ -62,6 +63,10 @@ const App: React.FC = () => {
 
         <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24">
           <Testimonials />
+        </section>
+
+        <section id="map" className="border-b border-slate-100">
+          <ServiceAreaMap />
         </section>
 
         <section id="contact" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-900 text-white">
