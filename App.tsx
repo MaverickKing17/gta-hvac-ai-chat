@@ -53,7 +53,7 @@ const App: React.FC = () => {
           <Services />
         </section>
 
-        <section id="gallery" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/30">
+        <section id="gallery" className="py-24 px-6 md:px-12 lg:px-24">
           <ProjectGallery />
         </section>
 

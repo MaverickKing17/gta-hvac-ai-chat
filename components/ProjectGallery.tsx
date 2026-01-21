@@ -1,166 +1,238 @@
 
 import React, { useState } from 'react';
-import { PROJECTS, ProjectExtended } from '../constants';
-import { Target, Cpu, Activity, ArrowUpRight, Shield, Layers, Camera, Maximize2, MapPin, Gauge } from 'lucide-react';
+import { Cpu, Activity, Zap, Flame, Wind, Droplets, MapPin, Target, ShieldCheck, ChevronRight, Binary } from 'lucide-react';
+
+interface SystemNode {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  location: string;
+  metric: string;
+  metricLabel: string;
+  icon: React.ReactNode;
+  coords: { x: string; y: string };
+}
 
 const ProjectGallery: React.FC = () => {
-  const [filter, setFilter] = useState('All');
-  const [activeProject, setActiveProject] = useState<string | null>(null);
-  const categories = ['All', 'Residential', 'Commercial', 'Specialty'];
+  const [activeNode, setActiveNode] = useState<string | null>('node-1');
 
-  const filteredProjects = filter === 'All' 
-    ? PROJECTS 
-    : PROJECTS.filter(p => p.category === filter);
+  const nodes: SystemNode[] = [
+    {
+      id: 'node-1',
+      title: 'Precision Hydronic Center',
+      category: 'HEATING',
+      description: 'The heart of the home. Features a high-efficiency combi-boiler with smart hydraulic separation for multi-zone comfort.',
+      location: 'Basement Mechanical Room',
+      metric: '98.2%',
+      metricLabel: 'ANNUAL EFFICIENCY',
+      icon: <Flame size={20} />,
+      coords: { x: '42%', y: '82%' }
+    },
+    {
+      id: 'node-2',
+      title: 'Cold-Climate Heat Pump',
+      category: 'CLIMATE',
+      description: 'Ultra-quiet outdoor unit capable of full heating performance in Toronto winters down to -25°C.',
+      location: 'Exterior East Pad',
+      metric: '3.4 COP',
+      metricLabel: 'THERMAL OUTPUT',
+      icon: <Wind size={20} />,
+      coords: { x: '82%', y: '72%' }
+    },
+    {
+      id: 'node-3',
+      title: 'Zonal Air Management',
+      category: 'COOLING',
+      description: 'Smart dampers and variable speed air handlers ensuring every room maintains the exact target temperature.',
+      location: 'Attic / Central Plenums',
+      metric: '22 SEER2',
+      metricLabel: 'EFFICIENCY RATING',
+      icon: <Zap size={20} />,
+      coords: { x: '55%', y: '25%' }
+    },
+    {
+      id: 'node-4',
+      title: 'Automated Snow Melt',
+      category: 'SPECIALTY',
+      description: 'Hydronic driveway heating integrated with moisture sensors to eliminate the need for salting or shoveling.',
+      location: 'Driveway Sub-Surface',
+      metric: '45°F',
+      metricLabel: 'TARGET SLAB TEMP',
+      icon: <Droplets size={20} />,
+      coords: { x: '15%', y: '88%' }
+    }
+  ];
+
+  const activeData = nodes.find(n => n.id === activeNode);
 
   return (
-    <div className="relative bg-[#020617] py-32 rounded-[3.5rem] px-8 md:px-16 overflow-hidden">
-      {/* HUD-Style Background Grid */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-        <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
+    <div className="relative bg-slate-950 py-32 rounded-[3.5rem] px-8 md:px-16 overflow-hidden border border-white/5 shadow-2xl">
+      {/* Background HUD Graphics */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-orange-600/5 blur-[150px] -z-10"></div>
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-orange-600/10 blur-[120px] rounded-full"></div>
+      
+      <div className="flex flex-col lg:flex-row items-center gap-20 relative z-10">
+        
+        {/* Left: Interactive Blueprint Visual */}
+        <div className="w-full lg:w-3/5 relative aspect-video bg-slate-900/50 rounded-[2.5rem] border border-white/10 p-12 overflow-hidden group">
+          
+          {/* Stylized Home Silhouette (SVG) */}
+          <svg viewBox="0 0 800 500" className="w-full h-full text-slate-700/30 transition-all duration-700 group-hover:text-slate-700/50" fill="none" stroke="currentColor" strokeWidth="1.5">
+            {/* Ground line */}
+            <path d="M50 450 H750" />
+            {/* House Outline */}
+            <path d="M150 450 V200 L400 50 L650 200 V450 H150" />
+            {/* Floors */}
+            <path d="M150 320 H650" />
+            {/* Internal Rooms */}
+            <path d="M400 200 V450" />
+            <path d="M400 320 H650" />
+            {/* Driveway */}
+            <path d="M50 450 L150 450" strokeDasharray="5,5" />
+          </svg>
 
-      {/* Header Module */}
-      <div className="flex flex-col md:flex-row items-end justify-between mb-24 gap-12 relative z-10">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-orange-600/10 border border-orange-500/20 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-orange-500">
-            <Activity size={14} className="animate-pulse" />
-            Active Engineering Records
-          </div>
-          <h2 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none">
-            Mechanical <br />
-            <span className="text-orange-600">Archive.</span>
-          </h2>
-          <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-2xl">
-            A high-fidelity record of Atomic Air's craftsmanship. We don't just install systems; we build mechanical masterpieces optimized for Toronto's core infrastructure.
-          </p>
-        </div>
-
-        {/* Technical Filter Control */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-2 rounded-2xl flex flex-wrap gap-1">
-          {categories.map((cat) => (
+          {/* Interactive Nodes */}
+          {nodes.map((node) => (
             <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 ${
-                filter === cat 
-                  ? 'bg-orange-600 text-white shadow-xl shadow-orange-600/20 translate-y-[-1px]' 
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
-              }`}
+              key={node.id}
+              onClick={() => setActiveNode(node.id)}
+              className="absolute group/node"
+              style={{ left: node.coords.x, top: node.coords.y }}
             >
-              {cat}
+              <div className={`relative flex items-center justify-center w-10 h-10 transition-all duration-500 ${activeNode === node.id ? 'scale-125' : 'scale-100 hover:scale-110'}`}>
+                {/* Concentric Pulsing Rings */}
+                <div className={`absolute inset-0 rounded-full animate-ping ${activeNode === node.id ? 'bg-orange-500/40' : 'bg-slate-400/20'}`}></div>
+                <div className={`absolute -inset-2 border border-dashed rounded-full animate-spin-slow ${activeNode === node.id ? 'border-orange-500/50 opacity-100' : 'border-slate-400/0 opacity-0'}`} style={{ animationDuration: '8s' }}></div>
+                
+                {/* Core Icon */}
+                <div className={`relative z-10 w-full h-full rounded-full flex items-center justify-center border-2 transition-all ${activeNode === node.id ? 'bg-orange-600 border-white text-white shadow-[0_0_25px_rgba(255,107,0,0.5)]' : 'bg-slate-800 border-slate-600 text-slate-400 group-hover/node:border-white'}`}>
+                  {node.icon}
+                </div>
+
+                {/* Technical Label Tooltip */}
+                <div className={`absolute top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-slate-900 border border-white/10 rounded-md whitespace-nowrap opacity-0 group-hover/node:opacity-100 transition-opacity pointer-events-none z-20`}>
+                  <p className="text-[9px] font-black text-white uppercase tracking-widest">{node.title}</p>
+                </div>
+              </div>
             </button>
           ))}
+
+          {/* Telemetry Corner Decorations */}
+          <div className="absolute bottom-8 left-8 flex items-center gap-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+            <Binary size={14} className="text-orange-600" />
+            <span>Telemetry Active: TOR_MS_01</span>
+          </div>
+          <div className="absolute top-8 right-8 flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+            <span className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Remote Diagnostics Online</span>
+          </div>
         </div>
-      </div>
 
-      {/* Project Archive Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {filteredProjects.map((project: ProjectExtended) => (
-          <div 
-            key={project.id} 
-            className="group relative h-[600px] rounded-[2.5rem] overflow-hidden bg-slate-900 border border-white/10 shadow-2xl"
-            onMouseEnter={() => setActiveProject(project.id)}
-            onMouseLeave={() => setActiveProject(null)}
-          >
-            {/* Main Project Image */}
-            <img 
-              src={project.imageUrl} 
-              alt={project.title} 
-              className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-1000 ease-out scale-100 group-hover:scale-110"
-            />
-            
-            {/* Scanline Animation */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 group-hover:top-full transition-all duration-[2s] ease-in-out pointer-events-none z-30"></div>
-
-            {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-700"></div>
-
-            {/* Static HUD Info (Always Visible) */}
-            <div className="absolute top-8 left-8 z-20">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/5 backdrop-blur-lg border border-white/20 rounded-xl flex items-center justify-center text-orange-500 shadow-xl">
-                  <Cpu size={18} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-white/40 uppercase tracking-widest leading-none mb-1">Record Index</p>
-                  <p className="text-xs font-black text-white uppercase tracking-wider leading-none">#{project.systemId}</p>
-                </div>
+        {/* Right: Technical Data Card */}
+        <div className="w-full lg:w-2/5">
+          <div className="flex flex-col gap-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                <Target size={14} className="text-orange-500" />
+                System Anatomy
               </div>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">
+                The Anatomy of <br />
+                <span className="text-orange-600">Comfort.</span>
+              </h2>
+              <p className="text-slate-400 font-medium text-lg leading-relaxed">
+                Click the system nodes to explore the technical integration points of an Atomic High-Performance home.
+              </p>
             </div>
 
-            {/* Expanded Technical View (On Hover) */}
-            <div className="absolute inset-0 z-20 flex flex-col justify-end p-10 translate-y-12 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out pointer-events-none">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="px-3 py-1 bg-orange-600 text-white rounded text-[9px] font-black uppercase tracking-[0.2em]">{project.category}</span>
-                <span className="flex items-center gap-1.5 text-white/50 text-[9px] font-black uppercase tracking-[0.2em]">
-                  <MapPin size={10} className="text-orange-500" />
-                  {project.location}
-                </span>
-              </div>
-              
-              <h3 className="text-3xl font-black text-white mb-4 tracking-tighter leading-tight">{project.title}</h3>
-              <p className="text-slate-400 text-sm font-medium leading-relaxed mb-8 line-clamp-3">{project.description}</p>
-              
-              {/* Performance Metrics Bar */}
-              <div className="flex items-center gap-8 mb-8 border-y border-white/10 py-6">
-                <div>
-                  <p className="text-[8px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Primary Efficiency</p>
-                  <div className="flex items-center gap-2">
-                    <Gauge size={14} className="text-orange-500" />
-                    <span className="text-lg font-black text-white tracking-tighter">{project.efficiency}</span>
+            {/* Active Data Panel */}
+            <div className="bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[2.5rem] p-10 relative overflow-hidden transition-all duration-500 min-h-[400px]">
+              {activeData ? (
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-8">
+                    <div>
+                      <span className="px-3 py-1 bg-orange-600 text-white rounded text-[9px] font-black uppercase tracking-widest mb-3 inline-block">
+                        {activeData.category}
+                      </span>
+                      <h3 className="text-3xl font-black text-white tracking-tighter">{activeData.title}</h3>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Status</p>
+                      <p className="text-xs font-black text-green-500 uppercase flex items-center gap-1.5 justify-end">
+                        <Activity size={12} />
+                        Optimized
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <p className="text-[8px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Commission Year</p>
-                  <span className="text-lg font-black text-white tracking-tighter uppercase">{project.year}</span>
-                </div>
-              </div>
 
-              {/* Component Reveal Sidebar */}
-              <div className="flex flex-wrap gap-2">
-                {project.components.map((comp, idx) => (
-                  <span key={idx} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[9px] font-bold text-white/70 uppercase tracking-widest">
-                    {comp}
-                  </span>
-                ))}
-              </div>
-            </div>
+                  <p className="text-slate-400 font-medium leading-relaxed text-base mb-10">
+                    {activeData.description}
+                  </p>
 
-            {/* Interaction Button */}
-            <div className="absolute bottom-8 right-8 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
-              <button className="w-14 h-14 bg-orange-600 text-white rounded-2xl flex items-center justify-center shadow-2xl hover:bg-orange-500 transition-all active:scale-95">
-                <Maximize2 size={24} />
-              </button>
+                  <div className="grid grid-cols-2 gap-8 mb-auto">
+                    <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                      <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">Location ID</p>
+                      <div className="flex items-center gap-2 text-white font-bold text-xs uppercase">
+                        <MapPin size={14} className="text-orange-500" />
+                        {activeData.location}
+                      </div>
+                    </div>
+                    <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                      <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">{activeData.metricLabel}</p>
+                      <div className="flex items-center gap-2 text-white font-black text-xl tracking-tighter">
+                        <Cpu size={16} className="text-orange-500" />
+                        {activeData.metric}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button className="mt-10 w-full py-5 bg-white/5 hover:bg-orange-600 border border-white/10 hover:border-orange-500 rounded-2xl text-white font-black text-[10px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 group/btn shadow-xl active:scale-95">
+                    View Technical Datasheet
+                    <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-6 opacity-40">
+                  <Cpu size={48} className="text-slate-600" />
+                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Select a Node to Initialize Telemetry</p>
+                </div>
+              )}
             </div>
           </div>
-        ))}
+        </div>
       </div>
 
-      {/* Trust & Methodology Footer */}
-      <div className="mt-32 pt-16 border-t border-white/10 grid md:grid-cols-4 gap-12 relative z-10">
-        <div className="md:col-span-1">
-          <div className="w-12 h-12 bg-orange-600/10 rounded-xl flex items-center justify-center text-orange-500 mb-6">
-            <Shield size={24} />
+      {/* Trust Modules */}
+      <div className="mt-24 pt-16 border-t border-white/5 grid md:grid-cols-3 gap-12 relative z-10">
+        <div className="flex items-start gap-6">
+          <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-orange-500">
+            <ShieldCheck size={24} />
           </div>
-          <h4 className="text-white font-black text-sm uppercase tracking-widest mb-3">Integrity Log</h4>
-          <p className="text-slate-500 text-xs font-medium leading-relaxed">Every installation documented here passed our proprietary 124-point Master Tech audit.</p>
-        </div>
-        <div className="md:col-span-1">
-          <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-slate-400 mb-6">
-            <Layers size={24} />
-          </div>
-          <h4 className="text-white font-black text-sm uppercase tracking-widest mb-3">Service Fidelity</h4>
-          <p className="text-slate-500 text-xs font-medium leading-relaxed">Images represent authentic field conditions. No staged studio photography is utilized in our records.</p>
-        </div>
-        <div className="md:col-span-2 bg-white/5 p-8 rounded-3xl border border-white/10 flex items-center justify-between">
           <div>
-            <h4 className="text-white font-black text-lg tracking-tighter mb-1">Request Field Intelligence</h4>
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">Get a detailed case study of our commercial or residential retrofits.</p>
+            <h5 className="text-white font-black text-xs uppercase tracking-widest mb-2">Integrated Monitoring</h5>
+            <p className="text-slate-500 text-xs font-medium leading-relaxed uppercase tracking-wider">Systems linked directly to our central engineering hub for 24/7 reliability.</p>
           </div>
-          <button className="px-8 py-4 bg-orange-600 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-orange-500 transition-all">
-            Download Archive
-          </button>
+        </div>
+        <div className="flex items-start gap-6">
+          <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-slate-400">
+            <Binary size={24} />
+          </div>
+          <div>
+            <h5 className="text-white font-black text-xs uppercase tracking-widest mb-2">Calculated Load Sync</h5>
+            <p className="text-slate-500 text-xs font-medium leading-relaxed uppercase tracking-wider">Every component sized using proprietary Manual J and S calculation standards.</p>
+          </div>
+        </div>
+        <div className="flex items-start gap-6">
+          <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-slate-400">
+            <Zap size={24} />
+          </div>
+          <div>
+            <h5 className="text-white font-black text-xs uppercase tracking-widest mb-2">Peak Performance</h5>
+            <p className="text-slate-500 text-xs font-medium leading-relaxed uppercase tracking-wider">Guaranteed 95%+ operational efficiency across all hydronic and forced-air systems.</p>
+          </div>
         </div>
       </div>
     </div>
