@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ChevronRight, ArrowRight, ShieldCheck, Star } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
             <span className="text-orange-600">Built for Toronto.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl leading-relaxed font-medium">
             Since 1978, we've provided high-integrity heating and cooling solutions. 
             From high-efficiency heat pumps to luxury hydronics, we engineer comfort.
           </p>
@@ -51,29 +51,37 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative lg:block">
-          <div className="relative bg-slate-100 rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+        <div className="relative lg:block group">
+          <div className="relative bg-slate-100 rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200">
             <img 
-              src="https://picsum.photos/seed/atomic-pro/1000/800" 
+              src="https://i.ibb.co/HTnFLH3J/gemini-3-pro-image-preview-2k-a-A-professional-high.png" 
               alt="Professional HVAC Installation" 
-              className="w-full h-auto object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700"
+              className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-[1.03] transition-transform duration-[1.5s] ease-out"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
             
-            <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/90 backdrop-blur shadow-xl rounded-xl border border-slate-200">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">4.9</div>
+            {/* Microsoft-style Floating Glass Rating Card */}
+            <div className="absolute bottom-8 left-8 right-8 p-1 bg-white/40 backdrop-blur-xl shadow-2xl rounded-[1.8rem] border border-white/40 overflow-hidden transform group-hover:-translate-y-1 transition-transform duration-500">
+              <div className="bg-white/80 rounded-[1.6rem] p-6 flex items-center gap-6">
+                <div className="w-14 h-14 bg-orange-600 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-[0_10px_20px_rgba(255,107,0,0.3)]">
+                  4.9
+                </div>
                 <div>
-                  <p className="font-bold text-slate-900 text-sm">Top Rated Service</p>
-                  <p className="text-xs text-slate-500">Based on 500+ Local Reviews</p>
+                  <div className="flex items-center gap-1 mb-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} fill="#FF6B00" className="text-orange-600" />
+                    ))}
+                  </div>
+                  <p className="font-black text-slate-900 text-[15px] tracking-tight">Top Rated Service</p>
+                  <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Based on 500+ Local Reviews</p>
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Decorative Elements */}
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-600/5 blur-3xl rounded-full"></div>
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-slate-900/5 blur-3xl rounded-full"></div>
+          {/* Enhanced Decorative Elements */}
+          <div className="absolute -top-12 -right-12 w-64 h-64 bg-orange-600/10 blur-[100px] rounded-full -z-10 group-hover:bg-orange-600/15 transition-colors"></div>
+          <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-slate-200 blur-[100px] rounded-full -z-10"></div>
         </div>
       </div>
     </div>
