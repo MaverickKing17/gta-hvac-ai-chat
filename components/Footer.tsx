@@ -270,15 +270,15 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Section - UPDATED WITH BRIGHT WHITE BOLDER TEXT */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-          <p className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em]">
+          <p className="text-white text-[11px] font-black uppercase tracking-[0.2em]">
             © {new Date().getFullYear()} {COMPANY_NAME}. Licensed Master HVAC Contractor #40012354
           </p>
           <div className="flex items-center gap-8">
-            <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">Toronto • Etobicoke • Mississauga • North York • Vaughan</p>
-            <div className="w-px h-4 bg-white/5 hidden md:block"></div>
-            <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">Designed for High-Performance Mechanical Excellence</p>
+            <p className="text-[9px] text-white/90 font-black uppercase tracking-widest">Toronto • Etobicoke • Mississauga • North York • Vaughan</p>
+            <div className="w-px h-4 bg-white/20 hidden md:block"></div>
+            <p className="text-[9px] text-white/90 font-black uppercase tracking-widest">Designed for High-Performance Mechanical Excellence</p>
           </div>
         </div>
       </div>
@@ -328,8 +328,7 @@ const Footer: React.FC = () => {
   );
 };
 
-// --- MODAL CONTENT COMPONENTS ---
-
+// ... existing modal content components ...
 const PrivacyPolicy = () => (
   <div className="space-y-8">
     <section>
