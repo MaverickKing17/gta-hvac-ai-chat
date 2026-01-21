@@ -45,37 +45,48 @@ const Services: React.FC = () => {
           </p>
         </div>
         
-        {/* Market Metrics Panel */}
+        {/* MARKET METRICS PANEL - ENHANCED VISIBILITY */}
         <div className="relative group/status hidden lg:block">
-          <div className="absolute -inset-1 bg-gradient-to-r from-orange-600/30 to-slate-900/30 rounded-3xl blur-xl opacity-50 group-hover/status:opacity-100 transition-opacity duration-700"></div>
-          <div className="relative bg-[#020617] border border-white/15 rounded-3xl p-8 min-w-[340px] shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between mb-8 relative z-10">
-              <div className="space-y-1">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.35em]">Node 01: Status</p>
-                <h4 className="text-white font-black text-sm uppercase tracking-widest">Operational</h4>
+          <div className="absolute -inset-2 bg-gradient-to-r from-orange-600/40 to-slate-900/40 rounded-[2rem] blur-2xl opacity-60 group-hover/status:opacity-100 transition-opacity duration-700"></div>
+          <div className="relative bg-[#020617] border border-white/20 rounded-[2rem] p-8 min-w-[360px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
+            <div className="flex items-center justify-between mb-10 relative z-10">
+              <div className="space-y-2">
+                <p className="text-[10px] font-black text-white uppercase tracking-[0.4em]">Node 01: Status</p>
+                <h4 className="text-white font-black text-2xl uppercase tracking-widest flex items-center gap-3">
+                  Operational
+                  <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_12px_#22c55e]"></span>
+                </h4>
               </div>
-              <div className="w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-orange-500">
-                <Icons.Activity size={18} className="animate-pulse" />
+              <div className="w-12 h-12 bg-white/10 rounded-2xl border border-white/10 flex items-center justify-center text-orange-500 shadow-inner">
+                <Icons.Activity size={22} className="animate-pulse" />
               </div>
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-8">
               {[
-                { label: 'Network Efficiency', val: '94.2%', color: 'bg-orange-500' },
-                { label: 'System Uptime', val: '99.9%', color: 'bg-green-500' },
-                { label: 'Field Reliability', val: '100%', color: 'bg-blue-500' }
+                { label: 'Network Efficiency', val: '94.2%', color: 'bg-orange-500', glow: 'shadow-[0_0_15px_rgba(249,115,22,0.4)]' },
+                { label: 'System Uptime', val: '99.9%', color: 'bg-green-500', glow: 'shadow-[0_0_15px_rgba(34,197,94,0.4)]' },
+                { label: 'Field Reliability', val: '100%', color: 'bg-blue-500', glow: 'shadow-[0_0_15px_rgba(59,130,246,0.4)]' }
               ].map((m, i) => (
-                <div key={i} className="space-y-2">
-                  <div className="flex justify-between text-[9px] font-black text-white/60 uppercase tracking-widest">
+                <div key={i} className="space-y-3 group/metric">
+                  <div className="flex justify-between text-[11px] font-black text-white uppercase tracking-[0.2em] group-hover/metric:text-orange-400 transition-colors">
                     <span>{m.label}</span>
-                    <span>{m.val}</span>
+                    <span className="font-mono">{m.val}</span>
                   </div>
-                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className={`h-full ${m.color} rounded-full`} style={{ width: m.val }}></div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden border border-white/5">
+                    <div 
+                      className={`h-full ${m.color} ${m.glow} rounded-full transition-all duration-1000 ease-out relative`} 
+                      style={{ width: m.val }}
+                    >
+                      <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Tactical Grid Overlay for Panel */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '12px 12px' }}></div>
           </div>
         </div>
       </div>
