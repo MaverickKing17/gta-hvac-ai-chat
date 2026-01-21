@@ -12,9 +12,9 @@ const Story: React.FC = () => {
             <img 
               src="https://i.ibb.co/XkW63hRx/gemini-3-pro-image-preview-2k-a-Replace-the-current.png" 
               alt="Atomic Air Legacy Installation" 
-              className="rounded-3xl object-cover object-top w-full aspect-[3/4] shadow-2xl transition-all duration-700 group-hover:scale-[1.01]"
+              className="rounded-3xl w-full h-auto shadow-2xl transition-all duration-700 group-hover:scale-[1.01]"
             />
-            <div className="absolute -bottom-8 -right-8 bg-white/95 backdrop-blur-md p-8 rounded-2xl border border-slate-200 shadow-2xl max-w-[280px]">
+            <div className="absolute -bottom-8 -right-8 bg-white/95 backdrop-blur-md p-8 rounded-2xl border border-slate-200 shadow-2xl max-w-[280px] z-10">
               <p className="text-4xl font-black text-orange-600 mb-1 tracking-tighter">Since 1978</p>
               <p className="text-slate-500 font-bold text-xs uppercase tracking-widest">Built on Trust & Integrity</p>
             </div>

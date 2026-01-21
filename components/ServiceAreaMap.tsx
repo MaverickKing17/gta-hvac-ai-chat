@@ -1,26 +1,53 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
-import { MapPin, Shield, Navigation } from 'lucide-react';
+import { MapPin, Shield, Navigation, Loader2 } from 'lucide-react';
 
 const ServiceAreaMap: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (mapContainerRef.current && !mapRef.current) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '200px' } // Start loading 200px before it enters viewport
+    );
+
+    if (mapContainerRef.current) {
+      observer.observe(mapContainerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isVisible && mapContainerRef.current && !mapRef.current) {
       // Initialize map centered on Toronto/GTA
       mapRef.current = L.map(mapContainerRef.current, {
         center: [43.68, -79.45],
         zoom: 10,
         scrollWheelZoom: false,
-        zoomControl: false
+        zoomControl: false,
+        fadeAnimation: true,
+        markerZoomAnimation: true
       });
 
       // Add clean, professional tile layer (CartoDB Positron)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-      }).addTo(mapRef.current);
+      const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20
+      });
+
+      tiles.on('load', () => setIsLoaded(true));
+      tiles.addTo(mapRef.current);
 
       // Add a circle representing the 35km service radius
       L.circle([43.6532, -79.3832], {
@@ -48,11 +75,13 @@ const ServiceAreaMap: React.FC = () => {
         { name: "Scarborough", coords: [43.7764, -79.2318] as [number, number] }
       ];
 
+      const markerLayer = L.layerGroup();
       locations.forEach(loc => {
         L.marker(loc.coords, { icon: atomicIcon })
-          .addTo(mapRef.current!)
-          .bindPopup(`<b>${loc.name} Hub</b><br>Full mechanical service area.`);
+          .bindPopup(`<b>${loc.name} Hub</b><br>Full mechanical service area.`)
+          .addTo(markerLayer);
       });
+      markerLayer.addTo(mapRef.current);
       
       L.control.zoom({ position: 'bottomright' }).addTo(mapRef.current);
     }
@@ -63,7 +92,7 @@ const ServiceAreaMap: React.FC = () => {
         mapRef.current = null;
       }
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <div className="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden">
@@ -111,8 +140,18 @@ const ServiceAreaMap: React.FC = () => {
           </div>
 
           <div className="lg:col-span-2 relative">
-            <div className="pro-card p-2 rounded-[2.5rem] bg-white border border-slate-200 shadow-2xl relative z-10">
-              <div ref={mapContainerRef} className="rounded-[2.2rem] overflow-hidden" style={{ height: '580px' }}></div>
+            <div className="pro-card p-2 rounded-[2.5rem] bg-white border border-slate-200 shadow-2xl relative z-10 overflow-hidden">
+              <div 
+                ref={mapContainerRef} 
+                className={`rounded-[2.2rem] overflow-hidden transition-opacity duration-700 bg-slate-50 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                style={{ height: '580px' }}
+              ></div>
+              {!isLoaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50/50 backdrop-blur-sm z-20 rounded-[2.2rem]">
+                  <Loader2 className="w-10 h-10 text-orange-600 animate-spin mb-4" />
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Optimizing Service Map...</p>
+                </div>
+              )}
             </div>
             {/* Decorative MS-style elements */}
             <div className="absolute -top-12 -right-12 w-64 h-64 bg-orange-600/5 blur-3xl rounded-full -z-0"></div>
