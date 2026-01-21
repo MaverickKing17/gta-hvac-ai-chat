@@ -34,19 +34,21 @@ const RebateCalculator: React.FC = () => {
           The <span className="text-slate-900 font-bold border-b-2 border-orange-200">2026 Home Efficiency Program</span> offers significant capital recovery for precision HVAC upgrades. Calculate your eligibility instantly.
         </p>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {[
-            { title: 'Capital Recovery', desc: 'Direct federal grants for heat pump adoption.', icon: <Target size={20} /> },
-            { title: 'Efficiency Load Sync', desc: 'Optimized for Ontario cold-climate standards.', icon: <TrendingUp size={20} /> },
-            { title: 'Zero Interest Funding', desc: 'Stackable with Clean Energy financing.', icon: <Zap size={20} /> },
+            { title: 'Capital Recovery', desc: 'Direct federal grants for heat pump adoption.', icon: <Target size={22} /> },
+            { title: 'Efficiency Load Sync', desc: 'Optimized for Ontario cold-climate standards.', icon: <TrendingUp size={22} /> },
+            { title: 'Zero Interest Funding', desc: 'Stackable with Clean Energy financing.', icon: <Zap size={22} /> },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-6 group">
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-orange-500 group-hover:border-slate-800 transition-all duration-500">
+              <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:bg-slate-900 group-hover:text-orange-500 group-hover:border-slate-800 transition-all duration-500 shadow-sm">
                 {item.icon}
               </div>
-              <div>
-                <h4 className="font-black text-slate-900 text-lg tracking-tight mb-1">{item.title}</h4>
-                <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.desc}</p>
+              <div className="pt-1">
+                <h4 className="font-black text-slate-900 text-xl tracking-tight mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h4>
+                <p className="text-slate-700 text-base font-semibold leading-snug max-w-sm">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}

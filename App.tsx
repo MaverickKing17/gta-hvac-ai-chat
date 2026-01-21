@@ -37,31 +37,34 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-white">
+      {/* Global Tech Texture Overlay to prevent "blankness" */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.02] z-0" style={{ backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }}></div>
+      
       <StickyEmergencyBar />
       <Navbar activeSection={activeSection} />
       
-      <main>
+      <main className="relative z-10">
         <section id="hero" className="border-b border-slate-100">
           <Hero />
         </section>
         
-        <section id="story" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/50">
+        <section id="story" className="py-20 px-6 md:px-12 lg:px-24 bg-slate-50/50">
           <Story />
         </section>
 
-        <section id="services" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="services" className="py-20 px-6 md:px-12 lg:px-24">
           <Services />
         </section>
 
-        <section id="gallery" className="py-24 px-6 md:px-12 lg:px-24">
+        <section id="gallery" className="py-16 px-6 md:px-12 lg:px-24">
           <ProjectGallery />
         </section>
 
-        <section id="rebates" className="py-32 px-6 md:px-12 lg:px-24 border-y border-slate-100 overflow-hidden">
+        <section id="rebates" className="py-24 px-6 md:px-12 lg:px-24 border-y border-slate-100 overflow-hidden">
           <RebateCalculator />
         </section>
 
-        <section id="testimonials" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-50/50">
+        <section id="testimonials" className="py-20 px-6 md:px-12 lg:px-24 bg-slate-50/50">
           <Testimonials />
         </section>
 
@@ -69,7 +72,7 @@ const App: React.FC = () => {
           <ServiceAreaMap />
         </section>
 
-        <section id="contact" className="py-24 px-6 md:px-12 lg:px-24 bg-slate-900 text-white">
+        <section id="contact" className="py-20 px-6 md:px-12 lg:px-24 bg-slate-900 text-white">
           <Footer />
         </section>
       </main>

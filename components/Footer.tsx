@@ -1,160 +1,406 @@
 
-import React from 'react';
-import { Mail, Phone, Instagram, Facebook, Send, ShieldCheck, MapPin, ExternalLink, Globe, Lock, LifeBuoy, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Mail, Phone, Instagram, Facebook, Send, ShieldCheck, 
+  MapPin, ExternalLink, Globe, Lock, LifeBuoy, FileText, 
+  X, ChevronRight, Scale, BookOpen, Wrench, Award, AlertCircle 
+} from 'lucide-react';
 import { COMPANY_NAME, PHONE, EMAIL } from '../constants';
 
 const Footer: React.FC = () => {
+  const [modalContent, setModalContent] = useState<{title: string, content: React.ReactNode} | null>(null);
+
+  const openModal = (title: string, content: React.ReactNode) => {
+    setModalContent({ title, content });
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+    document.body.style.overflow = 'unset';
+  };
+
   return (
-    <div className="relative overflow-hidden">
-      {/* Precision Engineering Background Accent */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <footer className="relative bg-[#020617] pt-32 pb-12 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-white/5">
+      {/* Decorative Background */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange-600/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Upper Footer: Contact & Form */}
-        <div className="grid lg:grid-cols-2 gap-24 pb-20 border-b border-white/5">
+        
+        {/* Top Section: CTA & Newsletter */}
+        <div className="grid lg:grid-cols-2 gap-24 pb-24 border-b border-white/5">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[9px] font-black uppercase tracking-[0.3em] mb-8 text-orange-500">
-              <ShieldCheck size={12} />
-              Secure Engineering Channel
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-orange-500">
+              <ShieldCheck size={14} />
+              Field Operations Active
             </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tighter text-white">
-              Connect with <br />
-              <span className="text-orange-600">Our Masters.</span>
+            <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white leading-none">
+              Engineering <br />
+              <span className="text-orange-600">The Future.</span>
             </h2>
-            <p className="text-slate-400 mb-12 text-lg leading-relaxed max-w-lg font-medium">
-              Every project starts with a technical consultation. Submit your blueprints or requirements and an Atomic Master Contractor will respond within 4 business hours.
+            <p className="text-slate-400 mb-12 text-xl leading-relaxed max-w-lg font-medium">
+              Join 5,000+ GTA homeowners receiving seasonal technical updates and efficiency optimization tips.
             </p>
-
-            <form 
-              action="https://formspree.io/f/xojjbbza" 
-              method="POST"
-              className="space-y-6"
-            >
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="relative group">
-                  <input name="name" required className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-semibold text-sm" placeholder="Full Name" />
-                  <div className="absolute top-0 right-4 h-full flex items-center opacity-0 group-focus-within:opacity-100 transition-opacity">
-                    <div className="w-1 h-1 bg-orange-500 rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-                <div className="relative group">
-                  <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-semibold text-sm" placeholder="Email Address" />
-                </div>
-              </div>
-              <div className="relative group">
-                <input name="service" required className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-semibold text-sm" placeholder="Service Type (e.g. Heat Pump Retrofit)" />
-              </div>
-              <div className="relative group">
-                <textarea name="message" rows={4} required className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-semibold text-sm resize-none" placeholder="Project Specifications..."></textarea>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row items-center gap-6">
-                <button type="submit" className="w-full sm:w-auto bg-orange-600 hover:bg-orange-500 text-white font-black py-5 px-12 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-[0_20px_40px_rgba(234,88,12,0.2)] text-xs uppercase tracking-[0.2em] group">
-                  <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  Dispatch Inquiry
-                </button>
-                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hidden sm:block">
-                  Avg. Response: <span className="text-white">128 Minutes</span>
-                </div>
-              </div>
-            </form>
+            
+            <div className="relative max-w-md group">
+              <input 
+                type="email" 
+                placeholder="Engineering Alert Email" 
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50 focus:bg-white/[0.08] transition-all font-bold text-sm"
+              />
+              <button className="absolute right-3 top-3 bottom-3 bg-orange-600 hover:bg-orange-500 text-white px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2">
+                <Send size={18} />
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-col justify-between pt-12 lg:pt-0">
+          <div className="flex flex-col justify-end space-y-12">
             <div className="grid sm:grid-cols-2 gap-12">
-              <div className="space-y-10">
-                <div className="flex items-start gap-5 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all">
-                    <Phone size={20} />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Emergency Dispatch</p>
-                    <a href={`tel:${PHONE}`} className="text-2xl font-black text-white hover:text-orange-500 transition-colors tracking-tighter">{PHONE}</a>
-                  </div>
+              <div className="flex items-start gap-6 group cursor-pointer" onClick={() => window.location.href = `tel:${PHONE}`}>
+                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-xl">
+                  <Phone size={24} />
                 </div>
-                <div className="flex items-start gap-5 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all">
-                    <Mail size={20} />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Direct Engineering</p>
-                    <a href={`mailto:${EMAIL}`} className="text-xl font-black text-white hover:text-orange-500 transition-colors tracking-tight">{EMAIL}</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-5 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Headquarters</p>
-                    <p className="text-sm font-bold text-white tracking-tight">Etobicoke, ON <br /> Serving Greater Toronto</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Emergency Dispatch</p>
+                  <p className="text-2xl font-black text-white hover:text-orange-500 transition-colors tracking-tighter">{PHONE}</p>
                 </div>
               </div>
-              
-              {/* Pro Link Grid */}
-              <div className="grid grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-white text-[11px] font-black uppercase tracking-[0.2em] mb-6">Solutions</h4>
-                  <ul className="space-y-4 text-xs font-bold text-slate-500">
-                    <li><a href="#services" className="hover:text-orange-500 transition-colors">Hydronic Systems</a></li>
-                    <li><a href="#services" className="hover:text-orange-500 transition-colors">Heat Pump Retrofits</a></li>
-                    <li><a href="#services" className="hover:text-orange-500 transition-colors">Commercial HVAC</a></li>
-                    <li><a href="#services" className="hover:text-orange-500 transition-colors">Precision Cooling</a></li>
-                  </ul>
+              <div className="flex items-start gap-6 group cursor-pointer" onClick={() => window.location.href = `mailto:${EMAIL}`}>
+                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all shadow-xl">
+                  <Mail size={24} />
                 </div>
                 <div>
-                  <h4 className="text-white text-[11px] font-black uppercase tracking-[0.2em] mb-6">Support</h4>
-                  <ul className="space-y-4 text-xs font-bold text-slate-500">
-                    <li className="flex items-center gap-2"><LifeBuoy size={12} /> <a href="#" className="hover:text-orange-500 transition-colors">Technical Help</a></li>
-                    <li className="flex items-center gap-2"><Globe size={12} /> <a href="#map" className="hover:text-orange-500 transition-colors">Service Area</a></li>
-                    <li className="flex items-center gap-2"><FileText size={12} /> <a href="#rebates" className="hover:text-orange-500 transition-colors">Rebate Guide</a></li>
-                    <li className="flex items-center gap-2"><ExternalLink size={12} /> <a href="#" className="hover:text-orange-500 transition-colors">Emergency Portal</a></li>
-                  </ul>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">General Inquiry</p>
+                  <p className="text-xl font-black text-white hover:text-orange-500 transition-colors tracking-tight break-all">{EMAIL}</p>
                 </div>
               </div>
             </div>
-
-            {/* Tech Status Badge */}
-            <div className="mt-12 p-6 bg-white/[0.03] rounded-2xl border border-white/5 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-[10px] font-black text-white uppercase tracking-widest">Engineering Systems Online</span>
+            
+            {/* Certification Badges */}
+            <div className="flex flex-wrap items-center gap-8 pt-8 opacity-40 hover:opacity-100 transition-opacity">
+              <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
+                <Award size={14} className="text-orange-500" /> TSSA CERTIFIED
               </div>
-              <div className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">
-                VER: 2026.04.12
+              <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
+                <Award size={14} className="text-orange-500" /> HRAI MEMBER
+              </div>
+              <div className="flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg">
+                <Award size={14} className="text-orange-500" /> MASTER TECH L01
               </div>
             </div>
           </div>
         </div>
 
-        {/* Lower Footer: Compliance & Social */}
-        <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 pt-10 pb-4">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">
-              © {new Date().getFullYear()} {COMPANY_NAME}. All Rights Reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-slate-500 hover:text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 transition-colors">
-                <Lock size={12} className="text-orange-500" /> Privacy Policy
+        {/* Middle Section: Big Navigation Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 py-24">
+          <div className="space-y-6">
+            <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+              <div className="w-1 h-3 bg-orange-600"></div> Systems
+            </h4>
+            <ul className="space-y-4 text-xs font-bold text-slate-500">
+              <li><button onClick={() => document.getElementById('services')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors">Hydronic Heating</button></li>
+              <li><button onClick={() => document.getElementById('services')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors">Heat Pump Retrofits</button></li>
+              <li><button onClick={() => document.getElementById('services')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors">Combi-Boiler Arrays</button></li>
+              <li><button onClick={() => document.getElementById('services')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors">Commercial RTUs</button></li>
+              <li><button onClick={() => document.getElementById('services')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors">Smart Snow Melt</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+              <div className="w-1 h-3 bg-slate-700"></div> Resources
+            </h4>
+            <ul className="space-y-4 text-xs font-bold text-slate-500">
+              <li><button onClick={() => openModal('Rebate Guide 2026', <RebateGuide />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><FileText size={12}/> Rebate Guide</button></li>
+              <li><button onClick={() => openModal('Maintenance Checklist', <MaintenanceChecklist />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><BookOpen size={12}/> Field Checklist</button></li>
+              <li><button onClick={() => document.getElementById('gallery')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Globe size={12}/> Project Map</button></li>
+              <li><button onClick={() => openModal('Emergency Procedures', <EmergencyProcedures />)} className="hover:text-orange-500 transition-colors flex items-center gap-2 text-red-400"><AlertCircle size={12}/> Emergency SOP</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+              <div className="w-1 h-3 bg-slate-700"></div> Support
+            </h4>
+            <ul className="space-y-4 text-xs font-bold text-slate-500">
+              <li><button onClick={() => openModal('Support Center', <SupportCenter />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><LifeBuoy size={12}/> Help Center</button></li>
+              <li><button onClick={() => openModal('Technical Support', <TechSupport />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Wrench size={12}/> Tech Support</button></li>
+              <li><button onClick={() => document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})} className="hover:text-orange-500 transition-colors flex items-center gap-2"><ExternalLink size={12}/> Service Booking</button></li>
+              <li><button onClick={() => openModal('Accessibility Policy', <Accessibility />)} className="hover:text-orange-500 transition-colors">Accessibility</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+              <div className="w-1 h-3 bg-slate-700"></div> Legal
+            </h4>
+            <ul className="space-y-4 text-xs font-bold text-slate-500">
+              <li><button onClick={() => openModal('Privacy Policy', <PrivacyPolicy />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Lock size={12}/> Privacy Policy</button></li>
+              <li><button onClick={() => openModal('Terms of Service', <TermsOfService />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><Scale size={12}/> Terms of Service</button></li>
+              <li><button onClick={() => openModal('Warranty Coverage', <WarrantyInfo />)} className="hover:text-orange-500 transition-colors flex items-center gap-2"><ShieldCheck size={12}/> Warranty Info</button></li>
+              <li><button onClick={() => openModal('License Information', <LicenseInfo />)} className="hover:text-orange-500 transition-colors">License & Insurance</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-white text-[11px] font-black uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+              <div className="w-1 h-3 bg-slate-700"></div> Connect
+            </h4>
+            <div className="flex gap-4 mb-8">
+              <a href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-orange-600 transition-all shadow-lg">
+                <Instagram size={20} />
               </a>
-              <a href="#" className="text-slate-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors">Terms of Service</a>
-              <a href="#" className="text-slate-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors">Warranty Info</a>
+              <a href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-orange-600 transition-all shadow-lg">
+                <Facebook size={20} />
+              </a>
+            </div>
+            <div className="p-6 bg-white/[0.03] rounded-2xl border border-white/5 space-y-4">
+              <p className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                System Status
+              </p>
+              <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-full bg-green-500 w-[94%]"></div>
+              </div>
+              <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Efficiency Benchmark: 94.2%</p>
             </div>
           </div>
-          
-          <div className="flex items-center gap-6">
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-orange-600 transition-all">
-              <Instagram size={18} />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-orange-600 transition-all">
-              <Facebook size={18} />
-            </a>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+          <p className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em]">
+            © {new Date().getFullYear()} {COMPANY_NAME}. Licensed Master HVAC Contractor #40012354
+          </p>
+          <div className="flex items-center gap-8">
+            <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">Toronto • Etobicoke • Mississauga • North York • Vaughan</p>
+            <div className="w-px h-4 bg-white/5 hidden md:block"></div>
+            <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">Designed for High-Performance Mechanical Excellence</p>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* MODAL OVERLAY */}
+      {modalContent && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6 md:px-12 py-12">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeModal}></div>
+          <div className="relative w-full max-w-4xl h-full max-h-[85vh] bg-slate-900 border border-white/10 rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300">
+            {/* Modal Header */}
+            <div className="p-8 md:p-12 border-b border-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-orange-600 rounded-2xl flex items-center justify-center text-white shadow-2xl">
+                  <FileText size={24} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-white tracking-tighter">{modalContent.title}</h3>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">ATOMIC DOCUMENTATION v2.0</p>
+                </div>
+              </div>
+              <button onClick={closeModal} className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all">
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="flex-grow p-8 md:p-12 overflow-y-auto scroll-smooth">
+              <div className="prose prose-invert max-w-none text-slate-400 leading-relaxed font-medium">
+                {modalContent.content}
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-8 border-t border-white/5 bg-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Lock size={14} className="text-green-500" />
+                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Encrypted Internal Access</span>
+              </div>
+              <button onClick={() => window.print()} className="flex items-center gap-2 text-[10px] font-black text-white uppercase tracking-widest hover:text-orange-500 transition-colors">
+                <ChevronRight size={14} /> Download PDF Version
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </footer>
   );
 };
+
+// --- MODAL CONTENT COMPONENTS ---
+
+const PrivacyPolicy = () => (
+  <div className="space-y-8">
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">1. Information Architecture</h4>
+      <p>Atomic Air ("The Company") values the high-fidelity security of our client data. We collect technical site data, contact information, and mechanical load profiles strictly for the purpose of engineering precision HVAC environments. We utilize enterprise-grade encryption for all project specifications.</p>
+    </section>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">2. Telemetry & Smart Diagnostics</h4>
+      <p>Homeowners utilizing our connected service packages may have system telemetry data recorded to ensure peak performance and predictive maintenance. This data is anonymized and stored on secure local Toronto servers.</p>
+    </section>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">3. Data Integrity</h4>
+      <p>We do not sell user data to third-party HVAC manufacturers or marketing conglomerates. Your mechanical blueprint remains your property.</p>
+    </section>
+  </div>
+);
+
+const TermsOfService = () => (
+  <div className="space-y-8 text-sm">
+    <p className="bg-white/5 p-4 rounded-xl border border-white/10">LAST UPDATED: APRIL 2026. These terms govern all service contracts and maintenance agreements with Atomic Air Heating & Cooling.</p>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">Engineering Protocol</h4>
+      <p>All work is performed by Licensed Master Technicians in strict accordance with Ontario Building Codes, TSSA Safety Standards, and AHRI Efficiency Protocols. Clients must provide clear access to mechanical rooms and outdoor pads as per our site safety checklist.</p>
+    </section>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">Financial Scheduling</h4>
+      <p>Capital projects (Boiler Arrays, Heat Pump Retrofits) require a 30% mobilization deposit. Final balancing and commissioning reports will be provided upon project completion.</p>
+    </section>
+  </div>
+);
+
+const WarrantyInfo = () => (
+  <div className="space-y-6">
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="p-6 bg-orange-600/10 border border-orange-500/20 rounded-2xl">
+        <h5 className="text-orange-500 font-black mb-2 uppercase tracking-widest">Craftsmanship</h5>
+        <p className="text-white text-3xl font-black mb-4 tracking-tighter">10 YEARS</p>
+        <p className="text-slate-400 text-xs">Full guarantee on all pipework, electrical terminations, and structural mounting. Zero tolerance for field failure.</p>
+      </div>
+      <div className="p-6 bg-white/5 border border-white/10 rounded-2xl">
+        <h5 className="text-slate-400 font-black mb-2 uppercase tracking-widest">Parts (Manufacturer)</h5>
+        <p className="text-white text-3xl font-black mb-4 tracking-tighter">12 YEARS</p>
+        <p className="text-slate-400 text-xs">Standard on all major compressors, heat exchangers, and primary manifold components from our partners.</p>
+      </div>
+    </div>
+    <section className="pt-8">
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">Eligibility Maintenance</h4>
+      <p>To maintain your Atomic Performance Warranty, systems must undergo an annual optimization audit. Failure to clean filters or exterior coils by unauthorized parties may void primary components coverage.</p>
+    </section>
+  </div>
+);
+
+const MaintenanceChecklist = () => (
+  <div className="space-y-6">
+    <h4 className="text-white font-black text-xl mb-6 tracking-tighter">Seasonal Optimization SOP</h4>
+    <div className="space-y-4">
+      {[
+        { zone: "Indoor Unit", task: "Filter replacement (MERV 11 or higher recommended)", freq: "90 Days" },
+        { zone: "Outdoor Pad", task: "Clear 24-inch debris clearance around coil fins", freq: "Weekly (Spring/Fall)" },
+        { zone: "Hydronic Hub", task: "Pressure gauge verification (12-15 PSI standard)", freq: "Monthly" },
+        { zone: "Drainage", task: "Condensate pump and line flush to prevent biological growth", freq: "Annual" }
+      ].map((item, i) => (
+        <div key={i} className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl">
+          <div>
+            <p className="text-orange-500 text-[10px] font-black uppercase tracking-widest">{item.zone}</p>
+            <p className="text-white font-bold">{item.task}</p>
+          </div>
+          <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest">{item.freq}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const RebateGuide = () => (
+  <div className="space-y-8">
+    <p>The 2026 Home Efficiency Rebate Plus (HERP+) offers GTA homeowners up to $10,500 in direct capital recovery. Atomic Air handles 100% of the technical filing and load calculation requirements.</p>
+    <div className="space-y-4">
+      <h5 className="text-white font-black uppercase tracking-widest text-xs mb-4">Rebate Breakdown</h5>
+      <div className="p-4 border-l-4 border-orange-600 bg-white/5">
+        <p className="text-white font-bold">$7,500 - Cold-Climate Heat Pump Installation</p>
+        <p className="text-slate-500 text-xs">Units must be AHRI certified and listed on the NRCAN eligible list.</p>
+      </div>
+      <div className="p-4 border-l-4 border-slate-700 bg-white/5">
+        <p className="text-white font-bold">$1,500 - Advanced Smart Controls & Zoning</p>
+        <p className="text-slate-500 text-xs">When integrated with existing high-efficiency air handlers.</p>
+      </div>
+      <div className="p-4 border-l-4 border-slate-700 bg-white/5">
+        <p className="text-white font-bold">$1,500 - Hydraulic Separation Retrofits</p>
+        <p className="text-slate-500 text-xs">Primary/Secondary loop upgrades for legacy boiler systems.</p>
+      </div>
+    </div>
+  </div>
+);
+
+const EmergencyProcedures = () => (
+  <div className="bg-red-950/20 border border-red-500/20 p-8 rounded-3xl space-y-6">
+    <h4 className="text-red-500 font-black text-xl mb-4 tracking-tighter">Emergency Response Protocol</h4>
+    <p className="text-slate-300">If you experience a total heating failure in sub-zero temperatures (below -5°C):</p>
+    <ol className="space-y-4 list-decimal pl-6 text-slate-400">
+      <li>Contact our 24/7 Priority Line at <span className="text-white font-bold">{PHONE}</span>.</li>
+      <li>Do not attempt to cycle the main circuit breaker more than once.</li>
+      <li>Check the thermostat for "Auxiliary Heat" or "Emergency Heat" settings if on a hybrid system.</li>
+      <li>Ensure all exterior intake/exhaust vents are clear of snow or ice blockages.</li>
+    </ol>
+    <div className="pt-6 border-t border-red-500/10 text-center">
+      <p className="text-red-400 text-xs font-black uppercase tracking-widest">Priority response guaranteed for maintenance agreement holders.</p>
+    </div>
+  </div>
+);
+
+const SupportCenter = () => (
+  <div className="space-y-6">
+    <div className="grid grid-cols-2 gap-4">
+      <button className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-orange-600/10 hover:border-orange-500/30 transition-all text-left group">
+        <div className="w-10 h-10 rounded-xl bg-orange-600/20 flex items-center justify-center text-orange-500 mb-4 group-hover:bg-orange-600 group-hover:text-white">
+          <Wrench size={20} />
+        </div>
+        <p className="text-white font-bold mb-1">Troubleshooting</p>
+        <p className="text-slate-500 text-xs">Self-service guides for thermostat and filter issues.</p>
+      </button>
+      <button className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-orange-600/10 hover:border-orange-500/30 transition-all text-left group">
+        <div className="w-10 h-10 rounded-xl bg-orange-600/20 flex items-center justify-center text-orange-500 mb-4 group-hover:bg-orange-600 group-hover:text-white">
+          <BookOpen size={20} />
+        </div>
+        <p className="text-white font-bold mb-1">Owner Manuals</p>
+        <p className="text-slate-500 text-xs">PDF downloads for Carrier, Mitsubishi, and Viessmann.</p>
+      </button>
+    </div>
+    <p className="text-slate-500 text-sm italic">Additional technical documentation available via the Atomic Client Portal.</p>
+  </div>
+);
+
+const TechSupport = () => (
+  <div className="space-y-8">
+    <div className="p-8 bg-blue-900/10 border border-blue-500/20 rounded-3xl">
+      <h5 className="text-blue-500 font-black uppercase tracking-widest text-xs mb-4">Live Engineering Status</h5>
+      <p className="text-slate-300">Our remote diagnostic engineers are currently monitoring 452 residential systems. Current remote fix success rate: <span className="text-white font-black">68%</span>.</p>
+    </div>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">Direct Field Link</h4>
+      <p>Qualified technicians can provide live video-assisted troubleshooting for smart thermostat configuration and Wi-Fi pairing issues. Schedule a 15-minute diagnostic call for immediate resolution.</p>
+    </section>
+  </div>
+);
+
+const Accessibility = () => (
+  <div className="space-y-6">
+    <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">WCAG 2.1 Compliance</h4>
+    <p>Atomic Air is committed to digital engineering excellence for all users. Our site is designed with high-contrast UI, screen-reader optimized headings, and keyboard-only navigation capability. If you experience difficulty accessing our technical resources, please call our support line for personal assistance.</p>
+  </div>
+);
+
+const LicenseInfo = () => (
+  <div className="space-y-8">
+    <div className="flex items-center gap-6 p-6 bg-white/5 border border-white/10 rounded-2xl">
+      <div className="w-16 h-16 rounded-2xl bg-orange-600 flex items-center justify-center text-white">
+        <ShieldCheck size={32} />
+      </div>
+      <div>
+        <p className="text-white font-black text-lg">Full Operational Coverage</p>
+        <p className="text-slate-500 text-sm font-medium">Insured up to $5,000,000 per project incident.</p>
+      </div>
+    </div>
+    <section>
+      <h4 className="text-white font-black text-lg mb-4 uppercase tracking-tight">Authorized Operations</h4>
+      <ul className="space-y-2 text-slate-400 font-medium">
+        <li>• TSSA Fuel Safety Licensed Contractor #400...</li>
+        <li>• Workplace Safety and Insurance Board (WSIB) Compliant</li>
+        <li>• Red Seal Certified Master Technicians</li>
+        <li>• CFC/HRAI Ozone Depletion Prevention Certified</li>
+      </ul>
+    </section>
+  </div>
+);
 
 export default Footer;
