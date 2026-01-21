@@ -14,7 +14,6 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     { label: 'Home', id: 'hero' },
     { label: 'Our Legacy', id: 'story' },
     { label: 'Solutions', id: 'services' },
-    { label: 'Project Gallery', id: 'gallery' },
     { label: 'Rebate Estimator', id: 'rebates' },
   ];
 

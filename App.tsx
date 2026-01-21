@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Story from './components/Story';
 import Services from './components/Services';
-import ProjectGallery from './components/ProjectGallery';
 import RebateCalculator from './components/RebateCalculator';
 import Testimonials from './components/Testimonials';
 import ServiceAreaMap from './components/ServiceAreaMap';
@@ -20,8 +19,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Update Active Section
-      const sections = ['hero', 'story', 'services', 'gallery', 'rebates', 'testimonials', 'map', 'contact'];
+      // Update Active Section (Removed gallery)
+      const sections = ['hero', 'story', 'services', 'rebates', 'testimonials', 'map', 'contact'];
       const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {
@@ -51,7 +50,7 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Global Tech Texture Overlay to prevent "blankness" */}
+      {/* Global Tech Texture Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02] z-0" style={{ backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }}></div>
       
       <StickyEmergencyBar />
@@ -68,10 +67,6 @@ const App: React.FC = () => {
 
         <section id="services" className="py-20 px-6 md:px-12 lg:px-24">
           <Services />
-        </section>
-
-        <section id="gallery" className="py-16 px-6 md:px-12 lg:px-24">
-          <ProjectGallery />
         </section>
 
         <section id="rebates" className="py-24 px-6 md:px-12 lg:px-24 border-y border-slate-100 overflow-hidden">

@@ -4,11 +4,11 @@ import * as Icons from 'lucide-react';
 import { SERVICES } from '../constants';
 
 const Services: React.FC = () => {
-  const scrollToGallery = () => {
-    const gallery = document.getElementById('gallery');
-    if (gallery) {
+  const scrollToContact = () => {
+    const contact = document.getElementById('contact');
+    if (contact) {
       window.scrollTo({
-        top: gallery.offsetTop - 80,
+        top: contact.offsetTop - 80,
         behavior: 'smooth',
       });
     }
@@ -144,10 +144,10 @@ const Services: React.FC = () => {
                 </div>
 
                 <button 
-                  onClick={scrollToGallery}
+                  onClick={scrollToContact}
                   className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl text-slate-900 hover:bg-orange-600 hover:text-white transition-all duration-300 border border-slate-100 group-hover:border-orange-500 shadow-sm"
                 >
-                  <span className="text-[11px] font-black uppercase tracking-widest hidden group-hover:inline-block ml-2 animate-in fade-in slide-in-from-right-2">View Log</span>
+                  <span className="text-[11px] font-black uppercase tracking-widest hidden group-hover:inline-block ml-2 animate-in fade-in slide-in-from-right-2">Get Technical Specs</span>
                   <Icons.ArrowUpRight size={18} />
                 </button>
               </div>
