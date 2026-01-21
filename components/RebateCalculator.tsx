@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { CheckCircle2, Info, Sparkles, TrendingUp, Zap, Flame, Droplets, Target, Cpu } from 'lucide-react';
+import { CheckCircle2, Info, Sparkles, TrendingUp, Zap, Flame, Droplets, Target, Cpu, Shield } from 'lucide-react';
 import { REBATE_MAX_VALUE } from '../constants';
 
 const RebateCalculator: React.FC = () => {
@@ -31,24 +31,50 @@ const RebateCalculator: React.FC = () => {
         </h2>
         
         <p className="text-xl text-slate-600 mb-12 leading-relaxed max-w-lg font-medium">
-          The <span className="text-slate-900 font-bold border-b-2 border-orange-200">2026 Home Efficiency Program</span> offers significant capital recovery for precision HVAC upgrades. Calculate your eligibility instantly.
+          The <span className="text-slate-900 font-bold border-b-2 border-orange-200">2026 Home Efficiency Program</span> offers significant capital recovery for precision HVAC upgrades.
         </p>
 
-        <div className="space-y-10">
+        {/* HIGH-VISIBILITY TECHNICAL BENEFITS */}
+        <div className="space-y-8">
           {[
-            { title: 'Capital Recovery', desc: 'Direct federal grants for heat pump adoption.', icon: <Target size={22} /> },
-            { title: 'Efficiency Load Sync', desc: 'Optimized for Ontario cold-climate standards.', icon: <TrendingUp size={22} /> },
-            { title: 'Zero Interest Funding', desc: 'Stackable with Clean Energy financing.', icon: <Zap size={22} /> },
+            { 
+              title: 'Capital Recovery', 
+              desc: 'Direct federal grants for heat pump adoption.', 
+              icon: <Target size={24} />,
+              tag: 'FEDERAL_G1'
+            },
+            { 
+              title: 'Efficiency Load Sync', 
+              desc: 'Optimized for Ontario cold-climate standards.', 
+              icon: <TrendingUp size={24} />,
+              tag: 'ON_REF_04'
+            },
+            { 
+              title: 'Zero Interest Funding', 
+              desc: 'Stackable with Clean Energy financing.', 
+              icon: <Zap size={24} />,
+              tag: 'FIN_LINK_S'
+            },
           ].map((item, i) => (
-            <div key={i} className="flex items-start gap-6 group">
-              <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:bg-slate-900 group-hover:text-orange-500 group-hover:border-slate-800 transition-all duration-500 shadow-sm">
+            <div key={i} className="flex items-center gap-8 group p-4 rounded-[2rem] hover:bg-slate-50 transition-all duration-300">
+              <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white border-2 border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white group-hover:border-orange-500 transition-all duration-500 shadow-xl shadow-slate-200/50 group-hover:shadow-orange-600/30">
                 {item.icon}
               </div>
-              <div className="pt-1">
-                <h4 className="font-black text-slate-900 text-xl tracking-tight mb-2 group-hover:text-orange-600 transition-colors">{item.title}</h4>
-                <p className="text-slate-700 text-base font-semibold leading-snug max-w-sm">
+              <div className="flex-grow">
+                <div className="flex items-center gap-3 mb-1">
+                  <h4 className="font-black text-slate-900 text-xl tracking-tighter group-hover:text-orange-600 transition-colors">
+                    {item.title}
+                  </h4>
+                  <div className="px-2 py-0.5 bg-slate-100 rounded text-[8px] font-black text-slate-400 tracking-widest uppercase">
+                    {item.tag}
+                  </div>
+                </div>
+                <p className="text-slate-900 text-base font-bold leading-snug max-w-sm opacity-80">
                   {item.desc}
                 </p>
+              </div>
+              <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">
+                <CheckCircle2 size={20} className="text-orange-600" />
               </div>
             </div>
           ))}
