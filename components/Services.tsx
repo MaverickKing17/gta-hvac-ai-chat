@@ -4,6 +4,16 @@ import * as Icons from 'lucide-react';
 import { SERVICES } from '../constants';
 
 const Services: React.FC = () => {
+  const scrollToGallery = () => {
+    const gallery = document.getElementById('gallery');
+    if (gallery) {
+      window.scrollTo({
+        top: gallery.offsetTop - 80,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <div className="relative">
       {/* 2026 Tech Aesthetic Background Elements */}
@@ -130,8 +140,11 @@ const Services: React.FC = () => {
                   </div>
                 </div>
 
-                <button className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl text-slate-900 hover:bg-orange-600 hover:text-white transition-all duration-300 border border-slate-100 group-hover:border-orange-500 shadow-sm">
-                  <span className="text-[11px] font-black uppercase tracking-widest hidden group-hover:inline-block ml-2 animate-in fade-in slide-in-from-right-2">View Data</span>
+                <button 
+                  onClick={scrollToGallery}
+                  className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl text-slate-900 hover:bg-orange-600 hover:text-white transition-all duration-300 border border-slate-100 group-hover:border-orange-500 shadow-sm"
+                >
+                  <span className="text-[11px] font-black uppercase tracking-widest hidden group-hover:inline-block ml-2 animate-in fade-in slide-in-from-right-2">View Log</span>
                   <Icons.ArrowUpRight size={18} />
                 </button>
               </div>
